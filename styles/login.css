@@ -1,0 +1,10 @@
+#maindiv{
+    border-radius:10px;
+    border:1px solid lightgray;
+    padding-bottom:40px;
+    text-align: center;
+    background-color: rgba(211, 211, 211, 0.8);
+}
+nav{
+    margin-bottom:30px;
+}

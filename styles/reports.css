@@ -1,0 +1,14 @@
+.row {
+    padding-bottom:30px;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-bottom:10px;
+    test-align:center;
+    background-color: rgba(211, 211, 211, 0.8);
+}
+nav{
+    margin-bottom:30px;
+}
+#logout{
+    text-align:right;
+}
