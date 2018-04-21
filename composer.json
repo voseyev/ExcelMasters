@@ -1,0 +1,12 @@
+{
+  "name":"aaronavi/inventory_management/ExcelMasters",
+  "authors":[
+    {
+      "name":"Michael Horn",
+      "email":"mhorn8@mail.greenriver.edu"
+    }
+  ],
+  "require":{
+    "bcosca/fatfree-core":"dev-master"
+  }
+}

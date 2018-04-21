@@ -9,9 +9,21 @@ $f3->set('DEBUG', 3);
 
 //Login page
 $f3 -> route('GET|POST /', function($f3) {
+    $isValid = true;
     if(isset($_POST['submit']))
     {
-        header("Location: reports");
+        if(!$_POST['username'] == "aaronaviles")
+        {
+            $isValid = false;
+        }
+        if(!$_POST['password'] == "password")
+        {
+            $isValid = false;
+        }
+        if($isValid)
+        {
+            header("Location: reports");
+        }
     }
 
     $template = new Template();
