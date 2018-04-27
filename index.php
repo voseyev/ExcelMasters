@@ -1,17 +1,24 @@
 <?php
 
+// Turn on error reporting
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+
 session_start();
 
 require_once ('vendor/autoload.php');
 
 $f3 = Base::instance();
+require("model/dbfunctions.php");
 
 //Set debug level
 $f3->set('DEBUG', 3);
 
+$dbh = connect();
+
 //Login page
 $f3 -> route('GET|POST /', function($f3) {
-    $database = new Database();
+
 
 
 //    if(isset($_POST['submit']))
@@ -23,7 +30,7 @@ $f3 -> route('GET|POST /', function($f3) {
         $_SESSION['password'] = "";
 
         //if login page was submitted by user
-        if(isset($_POST['login']))
+        if(isset($_POST['submit']))
         {
             //if the username and password are not null
             if(!is_null($_POST['username'] && !is_null($_POST['password'])))
@@ -31,16 +38,16 @@ $f3 -> route('GET|POST /', function($f3) {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 //checks the database if correct
-                $data = $database->checkUser($username,$password);
-                //returns 1 if correct, otherwise 0
-                if($data == 1)
+                $data = checkUser($username,$password);
+                if(!empty($data['username']))
                 {
-                    //sets the session
                     $_SESSION['username'] = $username;
-                    $_SESSION['password'] = $password;
-                    $f3->reroute('/reports');
-                } else {
-                    echo "Wrong Login";
+                    $_PASSWORD['password'] = $password;
+                    header("Location:reports");
+                }
+                else
+                {
+                    echo "nope";
                 }
             }
         }

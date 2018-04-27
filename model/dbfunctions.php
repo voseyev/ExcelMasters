@@ -9,7 +9,7 @@
  * Used for functions connecting to the database
  */
 
-require("/home/aaronavi/config.php");
+require("/home2/aaronavi/db.php");
 
 /**
  * Connect to the database with a PDO
@@ -36,14 +36,18 @@ function connect()
  */
 function checkUser($username, $password)
 {
+    global $dbh;
     //Query the db
     $sql = "SELECT * FROM Admin
-                    WHERE username=$username and password= $password";
-    $statement = $this->dbh->prepare($sql);
+                    WHERE username=:username and password= :password";
+    $statement = $dbh->prepare($sql);
+    $statement->bindParam('username',$username,PDO::PARAM_STR);
+    $statement->bindParam('password',$password,PDO::PARAM_STR);
     // Execute the statement
-    $row = $statement->execute();
+    $statement->execute();
+    $data = $statement->fetch(PDO::FETCH_ASSOC);
     //Return true if a match found, false otherwise
-    return $row;
+    return $data;
 }
 
 
