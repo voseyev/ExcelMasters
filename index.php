@@ -49,6 +49,16 @@ $f3 -> route('GET|POST /', function($f3) {
 
 $f3-> route('GET|POST /reports', function($f3) {
 
+    if(empty($_SESSION['username']))
+    {
+        header("Location:inventory_management/ExcelMasters/");
+    }
+
+    if(isset($_POST['submit']))
+    {
+
+    }
+
     $template = new Template();
     echo $template->render('views/reports.html');
 });
