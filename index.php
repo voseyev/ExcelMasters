@@ -19,40 +19,31 @@ $dbh = connect();
 //Login page
 $f3 -> route('GET|POST /', function($f3) {
 
-
-
-//    if(isset($_POST['submit']))
-//    {
-//        header("Location: reports");
-//    }
-
-        $_SESSION['username'] = "";
-        $_SESSION['password'] = "";
-
-        //if login page was submitted by user
-        if(isset($_POST['submit']))
+    $_SESSION['username'] = "";
+    $_SESSION['password'] = "";
+    //if login page was submitted by user
+    if(isset($_POST['submit']))
+    {
+        //if the username and password are not null
+        if(!is_null($_POST['username'] && !is_null($_POST['password'])))
         {
-            //if the username and password are not null
-            if(!is_null($_POST['username'] && !is_null($_POST['password'])))
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            //checks the database if correct
+            $data = checkUser($username,$password);
+            if(!empty($data['username']))
             {
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                //checks the database if correct
-                $data = checkUser($username,$password);
-                if(!empty($data['username']))
+                $_SESSION['username'] = $username;
+                $_PASSWORD['password'] = $password;
+                header("Location:reports");
+            } else
                 {
-                    $_SESSION['username'] = $username;
-                    $_PASSWORD['password'] = $password;
-                    header("Location:reports");
+                echo "nope";
                 }
-                else
-                {
-                    echo "nope";
-                }
-            }
         }
-        $template = new Template();
-        echo $template->render('views/login.html');
+    }
+    $template = new Template();
+    echo $template->render('views/login.html');
 
 });
 
