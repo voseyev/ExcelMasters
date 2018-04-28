@@ -51,10 +51,21 @@ function checkUser($username, $password)
 }
 
 
-function uploadFile($fileName, $fileType, $fileSize)
+function uploadFile($fileName, $fileType, $fileSize, $fileData)
 {
+    global $dbh;
 
+    $sql="INSERT INTO tbl_files (name,type,size,data)
+      VALUES(:name, :type, :size, :data)";
 
-    $sql="INSERT INTO tbl_uploads(file,type,size) VALUES('$fileName','$file_type','$file_size')";
+    $statement = $dbh->prepare($sql);
+    $statement->bindParam(':name',$fileName,PDO::PARAM_STR);
+    $statement->bindParam(':type',$fileType,PDO::PARAM_STR);
+    $statement->bindParam(':size',$fileSize,PDO::PARAM_INT);
+    $statement->bindParam(':file',$fileData,PDO::PARAM_LOB);
+
+    $success = $statement->execute();
+    //Return true if a match found, false otherwise
+    return $success;
 
 }
