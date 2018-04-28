@@ -55,8 +55,8 @@ function uploadFile($fileName, $fileType, $fileSize, $fileData)
 {
     global $dbh;
 
-    $sql="INSERT INTO tbl_files (name,type,size,data)
-      VALUES(:name, :type, :size, :data)";
+    $sql="INSERT INTO tbl_files (name,type,size,file)
+      VALUES(:name, :type, :size, :file)";
 
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':name',$fileName,PDO::PARAM_STR);
