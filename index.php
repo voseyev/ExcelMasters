@@ -63,5 +63,13 @@ $f3-> route('GET|POST /reports', function($f3) {
     echo $template->render('views/reports.html');
 });
 
+
+//upload
+$f3-> route('GET|POST /upload', function($f3) {
+    require("model/upload.php");
+    $template = new Template();
+    echo $template->render('views/upload.html');
+});
+
 //Run Fat-Free Framework
 $f3->run();

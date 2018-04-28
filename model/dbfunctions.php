@@ -51,3 +51,10 @@ function checkUser($username, $password)
 }
 
 
+function uploadFile($fileName, $fileType, $fileSize)
+{
+
+
+    $sql="INSERT INTO tbl_uploads(file,type,size) VALUES('$fileName','$file_type','$file_size')";
+
+}
