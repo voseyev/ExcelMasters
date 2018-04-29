@@ -69,3 +69,17 @@ function uploadFile($fileName, $fileType, $fileSize, $fileData)
     return $success;
 
 }
+
+function getReports()
+{
+    global $dbh;
+
+    $sql = "SELECT * FROM tbl_files";
+
+    $statement = $dbh->prepare($sql);
+
+    $statement->execute();
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+}

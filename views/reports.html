@@ -27,16 +27,16 @@
 
     <div class="container" id="maindiv">
         <div class="row" id="col1">
-            <form method="post" action="#">
+            <form method="post" action="#" enctype="multipart/form-data">
                 <input type="file" name="file" id="myFile">
                 <input type="submit" name="submit" value="Upload" id="submit">
             </form>
         </div>
         <div class="row" id="col2">
             <select name="report" id="report">
-                <option>This Month</option>
-                <option>This Year</option>
-                <option>Basketball Season</option>
+                <repeat group="{{@reports}}" value="{{@report}}">
+                    <option>{{@report['name']}}</option>
+                </repeat>
             </select>
             <button name="show" id="show">Show</button><br>
 
