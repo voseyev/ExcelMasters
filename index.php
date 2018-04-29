@@ -66,7 +66,6 @@ $f3-> route('GET|POST /reports', function($f3) {
 
     $reports = getReports();
     $f3->set('reports',$reports);
-    print_r($reports);
 
     $template = new Template();
     echo $template->render('views/reports.html');

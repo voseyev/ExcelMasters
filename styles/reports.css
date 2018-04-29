@@ -12,6 +12,9 @@ nav{
 #logout{
     text-align:right;
 }
+table{
+    width:100%;
+}
 td,th{
     border:1px solid black;
     padding:7px;
