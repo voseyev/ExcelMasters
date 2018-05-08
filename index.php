@@ -61,7 +61,20 @@ $f3-> route('GET|POST /reports', function($f3) {
         $fileType = $_FILES['file']['type'];
         $fileData = $_FILES['file']['tmp_name'];
 
-        uploadFile($fileName, $fileType, $fileSize, $fileData);
+        $fp = fopen($_FILES['file']['tmp_name'],'rb');
+        while(($line = fgets($fp)) !== false)
+        {
+            $newWord = "";
+            $arr = explode(',',$line);
+            if(is_numeric($arr[0]))
+            {
+                print_r($arr);
+                echo "<br>";
+                sendData($arr[0],$arr[2],$arr[3],$arr[4],$arr[5],$arr[6]);
+            }
+        }
+
+        //uploadFile($fileName, $fileSize, $fileType, $fileData);
     }
 
     $reports = getReports();

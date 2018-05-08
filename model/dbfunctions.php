@@ -83,3 +83,43 @@ function getReports()
 
     return $data;
 }
+
+function sendData($id,$title,$date,$win,$pristine,$cosignor)
+{
+    global $dbh;
+
+    //Handling the date.. Later move to a different php file
+    $dateArr = explode("/",$date);
+    if(strlen($dateArr[0]) === 1)
+    {
+        $dateArr[0] = "0" . $dateArr[0];
+    }
+    if(strlen($dateArr[1]) === 1)
+    {
+        $dateArr[1] = "0" . $dateArr[1];
+    }
+    $date = $dateArr[2] . "-" . $dateArr[0] . "-" . $dateArr[1];
+
+    //Removing dollar sign from costs, functionality moved to a different file later
+    $win = str_replace("$","",$win);
+    $pristine = str_replace("$","",$pristine);
+    $cosignor = str_replace("$","",$cosignor);
+
+    echo "INSIDE SENDING FUNCTION: " . $id . " " . $title . " " . $date . " " . $win . " " . $pristine . " " . $cosignor . "<br>";
+
+    $sql="INSERT INTO report_data (item_num,title,end_date, win,pristine,cosignor)
+      VALUES(:id, :title, :date, :win,:pristine,:cosignor)";
+
+    $statement = $dbh->prepare($sql);
+
+    $statement->bindParam(':id',$id,PDO::PARAM_INT);
+    $statement->bindParam(':title',$title,PDO::PARAM_STR);
+    $statement->bindParam(':date',$date,PDO::PARAM_STR);
+    $statement->bindParam(':win',$win,PDO::PARAM_INT);
+    $statement->bindParam(':pristine',$pristine,PDO::PARAM_INT);
+    $statement->bindParam(':cosignor',$cosignor,PDO::PARAM_INT);
+
+    $success = $statement->execute();
+
+    return $success;
+}
