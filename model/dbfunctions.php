@@ -123,3 +123,18 @@ function sendData($id,$title,$date,$win,$pristine,$cosignor, $reportId)
 
     return $success;
 }
+
+function selectData($start, $end)
+{
+    global $dbh;
+
+
+    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost 
+            FROM report_data ORDER BY title";
+    $statement = $dbh->prepare($sql);
+    $statement->execute();
+    $result = $statement->setFetchMode(PDO::FETCH_ASSOC);
+    return $result;
+
+
+}

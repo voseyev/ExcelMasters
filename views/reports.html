@@ -38,6 +38,10 @@
                     <option>{{@report['name']}}</option>
                 </repeat>
             </select>
+
+
+
+
             <button class="btn btn-default" name="show" id="show">Show</button><br>
 
             <table class="table">
@@ -45,22 +49,25 @@
                     <th>Item Number</th>
                     <th>Title</th>
                     <th>End Date</th>
-                    <th>Winning </th>
                     <th>Winning Bid</th>
                     <th>Pristine Share</th>
                     <th>Consignor</th>
                     <th>Profit Margin</th>
                 </tr>
-                <tr>
-                    <td>6463</td>
-                    <td>Test</td>
-                    <td>10/20</td>
-                    <td>$90</td>
-                    <td>$100</td>
-                    <td>$10</td>
-                    <td>$30</td>
-                    <td>$30</td>
-                </tr>
+
+
+                <repeat group="{{@data}}" value="{{@row}}">
+                    <tr>
+                        <td>{{@row['item_num']}}</td>
+                        <td>{{@row['title']}}</td>
+                        <td>{{@row['end_date']}}</td>
+                        <td>{{@row['win']}}</td>
+                        <td>{{@row['pristine']}}</td>
+                        <td>{{@row['cosignor']}}</td>
+                        <td>{{@row['cost']}}</td>
+                    </tr>
+                </repeat>
+
             </table>
         </div>
     </div>
