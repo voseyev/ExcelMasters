@@ -65,8 +65,10 @@ function uploadFile($fileName, $fileType, $fileSize, $fileData)
     $statement->bindParam(':file',$fileData,PDO::PARAM_LOB);
 
     $success = $statement->execute();
+
+    $lastId = $dbh->lastInsertId();
     //Return true if a match found, false otherwise
-    return $success;
+    return $lastId;
 
 }
 
@@ -84,7 +86,7 @@ function getReports()
     return $data;
 }
 
-function sendData($id,$title,$date,$win,$pristine,$cosignor)
+function sendData($id,$title,$date,$win,$pristine,$cosignor, $reportId)
 {
     global $dbh;
 
@@ -105,10 +107,8 @@ function sendData($id,$title,$date,$win,$pristine,$cosignor)
     $pristine = str_replace("$","",$pristine);
     $cosignor = str_replace("$","",$cosignor);
 
-    echo "INSIDE SENDING FUNCTION: " . $id . " " . $title . " " . $date . " " . $win . " " . $pristine . " " . $cosignor . "<br>";
-
-    $sql="INSERT INTO report_data (item_num,title,end_date, win,pristine,cosignor)
-      VALUES(:id, :title, :date, :win,:pristine,:cosignor)";
+    $sql="INSERT INTO report_data (item_num,title,end_date, win,pristine,cosignor,reportId)
+      VALUES(:id, :title, :date, :win,:pristine,:cosignor, :reportId)";
 
     $statement = $dbh->prepare($sql);
 
@@ -118,7 +118,7 @@ function sendData($id,$title,$date,$win,$pristine,$cosignor)
     $statement->bindParam(':win',$win,PDO::PARAM_INT);
     $statement->bindParam(':pristine',$pristine,PDO::PARAM_INT);
     $statement->bindParam(':cosignor',$cosignor,PDO::PARAM_INT);
-
+    $statement->bindParam(':reportId',$reportId,PDO::PARAM_INT);
     $success = $statement->execute();
 
     return $success;
