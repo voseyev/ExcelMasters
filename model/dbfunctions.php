@@ -41,8 +41,8 @@ function checkUser($username, $password)
     $sql = "SELECT * FROM Admin
                     WHERE username=:username and password= :password";
     $statement = $dbh->prepare($sql);
-    $statement->bindParam('username',$username,PDO::PARAM_STR);
-    $statement->bindParam('password',$password,PDO::PARAM_STR);
+    $statement->bindParam('username', $username, PDO::PARAM_STR);
+    $statement->bindParam('password', $password, PDO::PARAM_STR);
     // Execute the statement
     $statement->execute();
     $data = $statement->fetch(PDO::FETCH_ASSOC);
@@ -55,14 +55,14 @@ function uploadFile($fileName, $fileType, $fileSize, $fileData)
 {
     global $dbh;
 
-    $sql="INSERT INTO tbl_files (name,type,size,file)
+    $sql = "INSERT INTO tbl_files (name,type,size,file)
       VALUES(:name, :type, :size, :file)";
 
     $statement = $dbh->prepare($sql);
-    $statement->bindParam(':name',$fileName,PDO::PARAM_STR);
-    $statement->bindParam(':type',$fileType,PDO::PARAM_STR);
-    $statement->bindParam(':size',$fileSize,PDO::PARAM_INT);
-    $statement->bindParam(':file',$fileData,PDO::PARAM_LOB);
+    $statement->bindParam(':name', $fileName, PDO::PARAM_STR);
+    $statement->bindParam(':type', $fileType, PDO::PARAM_STR);
+    $statement->bindParam(':size', $fileSize, PDO::PARAM_INT);
+    $statement->bindParam(':file', $fileData, PDO::PARAM_LOB);
 
     $success = $statement->execute();
     //Return true if a match found, false otherwise
@@ -84,42 +84,75 @@ function getReports()
     return $data;
 }
 
-function sendData($id,$title,$date,$win,$pristine,$cosignor)
+function sendData($id, $title, $date, $win, $pristine, $cosignor)
 {
     global $dbh;
 
     //Handling the date.. Later move to a different php file
-    $dateArr = explode("/",$date);
-    if(strlen($dateArr[0]) === 1)
-    {
+    $dateArr = explode("/", $date);
+    if (strlen($dateArr[0]) === 1) {
         $dateArr[0] = "0" . $dateArr[0];
     }
-    if(strlen($dateArr[1]) === 1)
-    {
+    if (strlen($dateArr[1]) === 1) {
         $dateArr[1] = "0" . $dateArr[1];
     }
     $date = $dateArr[2] . "-" . $dateArr[0] . "-" . $dateArr[1];
 
     //Removing dollar sign from costs, functionality moved to a different file later
-    $win = str_replace("$","",$win);
-    $pristine = str_replace("$","",$pristine);
-    $cosignor = str_replace("$","",$cosignor);
+    $win = str_replace("$", "", $win);
+    $pristine = str_replace("$", "", $pristine);
+    $cosignor = str_replace("$", "", $cosignor);
 
     echo "INSIDE SENDING FUNCTION: " . $id . " " . $title . " " . $date . " " . $win . " " . $pristine . " " . $cosignor . "<br>";
 
-    $sql="INSERT INTO report_data (item_num,title,end_date, win,pristine,cosignor)
+    $sql = "INSERT INTO report_data (item_num,title,end_date, win,pristine,cosignor)
       VALUES(:id, :title, :date, :win,:pristine,:cosignor)";
 
     $statement = $dbh->prepare($sql);
 
-    $statement->bindParam(':id',$id,PDO::PARAM_INT);
-    $statement->bindParam(':title',$title,PDO::PARAM_STR);
-    $statement->bindParam(':date',$date,PDO::PARAM_STR);
-    $statement->bindParam(':win',$win,PDO::PARAM_INT);
-    $statement->bindParam(':pristine',$pristine,PDO::PARAM_INT);
-    $statement->bindParam(':cosignor',$cosignor,PDO::PARAM_INT);
+    $statement->bindParam(':id', $id, PDO::PARAM_INT);
+    $statement->bindParam(':title', $title, PDO::PARAM_STR);
+    $statement->bindParam(':date', $date, PDO::PARAM_STR);
+    $statement->bindParam(':win', $win, PDO::PARAM_INT);
+    $statement->bindParam(':pristine', $pristine, PDO::PARAM_INT);
+    $statement->bindParam(':cosignor', $cosignor, PDO::PARAM_INT);
 
     $success = $statement->execute();
 
     return $success;
 }
+
+function selectData($start, $end)
+{
+    global $dbh;
+
+
+    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost 
+            FROM report_data ORDER BY title";
+    $statement = $dbh->prepare($sql);
+    $statement->execute();
+    $result = $statement->setFetchMode(PDO::FETCH_ASSOC);
+    return $result;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
