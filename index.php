@@ -81,6 +81,9 @@ $f3-> route('GET|POST /reports', function($f3) {
     $template = new Template();
     echo $template->render('views/reports.html');
 
+=======
+    require("model/report.php");
+>>>>>>> 8cbe9ede4544911eb5599565d1f2d47af442e26b
 });
 
 
