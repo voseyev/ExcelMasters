@@ -17,34 +17,41 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <title>Reports Page</title>
 </head>
 <body>
-    <nav class = "navbar bg-light navbar-light">
-        <h2>Inventory Management</h2>
-        <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/" id="logout">Logout</a>
-    </nav>
+<nav class="navbar bg-light navbar-light">
+    <h2>Inventory Management</h2>
+    <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/" id="logout">Logout</a>
+</nav>
 
-    <div class="container" id="maindiv">
-        <div class="row" id="col1">
-            <form method="post" action="#" enctype="multipart/form-data">
-                <input class="btn" type="file" name="file" id="myFile">
-                <input class="btn btn-default" type="submit" name="submit" value="Upload" id="submit">
-            </form>
-        </div>
-        <div class="row" id="col2">
+<div class="container" id="maindiv">
+    <div class="row" id="col1">
+        <form method="post" action="#" enctype="multipart/form-data">
+            <input class="btn" type="file" name="file" id="myFile">
+            <input class="btn btn-default" type="submit" name="submit" value="Upload" id="submit">
+        </form>
+    </div>
+    <div class="row" id="col2">
+        <div class="row">
             <select name="report" id="report">
                 <repeat group="{{@reports}}" value="{{@report}}">
                     <option>{{@report['name']}}</option>
                 </repeat>
             </select>
+        </div>
 
 
+        <button class="btn btn-default" name="show" id="show">Show</button>
+        <br>
 
-
-            <button class="btn btn-default" name="show" id="show">Show</button><br>
-
-            <table class="table">
+        <div class="row">
+            <table id="datatable" class="display">
+                <thead>
                 <tr>
                     <th>Item Number</th>
                     <th>Title</th>
@@ -55,7 +62,8 @@
                     <th>Profit Margin</th>
                 </tr>
 
-
+                </thead>
+                <tbody>
                 <repeat group="{{@data}}" value="{{@row}}">
                     <tr>
                         <td>{{@row['item_num']}}</td>
@@ -68,8 +76,16 @@
                     </tr>
                 </repeat>
 
+                </tbody>
             </table>
         </div>
     </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    });
+</script>
 </body>
 </html>

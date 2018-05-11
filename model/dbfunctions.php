@@ -133,7 +133,7 @@ function selectData($start, $end)
             FROM report_data ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
-    $result = $statement->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 
 
