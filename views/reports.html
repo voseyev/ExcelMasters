@@ -56,7 +56,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
             crossorigin="anonymous"></script>
+<<<<<<< HEAD
 <!--
+=======
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+>>>>>>> 05092d231c41dae8c43f8e4e6b5594fcc1a9d874
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 
 -->
@@ -93,6 +98,15 @@
 
         <br>
         <hr>
+
+        <!--Date Picker-->
+        <form>
+            <input type="date" id="datepicked" style="margin-left: 700px">
+            <button onclick="myFunction()" type="datesearch">Search Date</button>
+        </form>
+        <p id="showDate"></p>
+
+
 
         <div class="row">
             <table id="datatable" class="table table-striped table-bordered display">
@@ -132,5 +146,13 @@
         $('#datatable').DataTable();
     });
 </script>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("datepicked").value;
+        document.getElementById("showDate").innerHTML = x;
+    }
+</script>
+
 </body>
 </html>
