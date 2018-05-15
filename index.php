@@ -49,6 +49,10 @@ $f3 -> route('GET|POST /', function($f3) {
 
 $f3-> route('GET|POST /reports', function($f3) {
     require("model/report.php");
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    selectData($startDate, $endDate);
+
 });
 
 

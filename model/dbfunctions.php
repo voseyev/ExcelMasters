@@ -4,7 +4,7 @@
  * User: Tony T
  * Date: 4/25/2018
  * Time: 11:01 PM
- * @author Anthony Thompson
+ * @author Anthony Thompson & Michael Horn & Vlad Oseyev
  * @version 1.0
  * Used for functions connecting to the database
  */
@@ -50,7 +50,13 @@ function checkUser($username, $password)
     return $data;
 }
 
-
+/**
+ * @param $fileName name of the file
+ * @param $fileType type of the file
+ * @param $fileSize size of data of the file
+ * @param $fileData data inside of the file
+ * @return string of the id of the created file row
+ */
 function uploadFile($fileName, $fileType, $fileSize, $fileData)
 {
     global $dbh;
@@ -72,6 +78,9 @@ function uploadFile($fileName, $fileType, $fileSize, $fileData)
 
 }
 
+/**
+ * @return array if reports from the DB
+ */
 function getReports()
 {
     global $dbh;
@@ -86,6 +95,16 @@ function getReports()
     return $data;
 }
 
+/**
+ * @param $id column from csv
+ * @param $title column from csv
+ * @param $date column from csv
+ * @param $win column from csv
+ * @param $pristine column from csv
+ * @param $cosignor column from csv
+ * @param $reportId column from csv
+ * @return bool if it was sent correctly
+ */
 function sendData($id,$title,$date,$win,$pristine,$cosignor, $reportId)
 {
     global $dbh;
@@ -124,6 +143,11 @@ function sendData($id,$title,$date,$win,$pristine,$cosignor, $reportId)
     return $success;
 }
 
+/**
+ * @param $start date of data
+ * @param $end date of data
+ * @return array of data within the start and end date
+ */
 function selectData($start, $end)
 {
     global $dbh;

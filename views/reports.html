@@ -97,10 +97,12 @@
 
         <!--Date Picker-->
         <form>
-            <input type="date" id="datepicked" style="margin-left: 700px">
+            <input type="date" id="startDate" style="margin-left: 350px">
+            <input type="date" id="endDate" style="margin-left: 0px">
             <button onclick="myFunction()" type="datesearch">Search Date</button>
         </form>
         <p id="showDate"></p>
+        <p id="showDate2" style="margin-left: 10px"></p>
 
 
 
@@ -145,8 +147,10 @@
 
 <script>
     function myFunction() {
-        var x = document.getElementById("datepicked").value;
-        document.getElementById("showDate").innerHTML = x;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        document.getElementById("showDate").innerHTML = startDate;
+        document.getElementById("showDate2").innerHTML = endDate;
     }
 </script>
 
