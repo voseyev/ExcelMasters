@@ -46,7 +46,7 @@ function checkUser($username, $password)
     // Execute the statement
     $statement->execute();
     $data = $statement->fetch(PDO::FETCH_ASSOC);
-    //Return true if a match found, false otherwise
+    //Return data or null
     return $data;
 }
 
@@ -73,7 +73,8 @@ function uploadFile($fileName, $fileType, $fileSize, $fileData)
     $success = $statement->execute();
 
     $lastId = $dbh->lastInsertId();
-    //Return true if a match found, false otherwise
+
+    //Return data or null
     return $lastId;
 
 }
@@ -161,4 +162,14 @@ function selectData($start, $end)
     return $result;
 
 
+}
+
+function deleteCharacter($id)
+{
+    echo "Commencing deletion 2";
+    global $dbh;
+    $sql = "DELETE FROM tbl_files WHERE id = :id";
+    $statement = $dbh->prepare($sql);
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    $statement->execute();
 }

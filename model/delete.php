@@ -5,12 +5,11 @@
  * Date: 5/22/2018
  * Time: 9:43 AM
  */
-global $dbh;
-echo "buttonclicked.";
-$id = $_POST['id'];
-$sql = "DELETE FROM tbl_files
-                    WHERE id=:id";
-$statement = $dbh->prepare($sql);
-$statement->bindParam('id',$id,PDO::PARAM_INT);
-// Execute the statement
-$statement->execute();
+echo "Inside file 1";
+require('dbfunctions.php');
+$dbh = connect();
+echo "Deletion is commencing...";
+if (isset($_POST['id'])) { //if we get the name successfully
+    $id = $_POST['id'];
+    deleteReport($id);
+}
