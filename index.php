@@ -55,6 +55,22 @@ $f3-> route('GET|POST /reports', function($f3) {
 
 });
 
+$f3 -> route('GET|POST /editReports', function($f3)
+{
+    if(empty($_SESSION['username']))
+    {
+        header("Location:inventory_management/ExcelMasters/");
+    }
+    //display all reports
+    $reports = getReports();
+    $f3->set('reports',$reports);
+    //Be able to delete reports
+    //Be able to edit costs of certain report items
+
+
+    $template = new Template();
+    echo $template->render('views/editReports.html');
+});
 
 //upload
 $f3-> route('GET|POST /upload', function($f3) {
