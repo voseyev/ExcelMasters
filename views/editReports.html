@@ -38,7 +38,7 @@
                 <tr>
                     <td>{{@report['name']}}</td>
                     <td>{{@report['timestamp']}}</td>
-                    <td><button name="btn_delete" id="btn-delete" data-id3="{{@report['id']}}">x</button></td>
+                    <td><button name="btn_delete" id="delete{{report['id']}}" data-id3="{{@report['id']}}">x</button></td>
                 </tr>
             </repeat>
 
@@ -46,20 +46,22 @@
         </table>
     </div>
 <script>
-    $(document).on('click','.btn-delete', function()
-    {
-        var id=$(this).data("id3");
-        $.ajax({
-            url:"inventory_management/ExcelMasters/model/delete.php",
-            method:"POST",
-            data:{id:id},
-            dataType:"text",
-            success:function(data)
+    <repeat group="{{ @reports }}" value="{{ @report }}">
+        $("#delete{{@report['id']}}").click(function()
+        {
+        alert("button is messed up 2");
+            var id = $(this).val();
+            var deletion = confirm("Are you sure you want to delete this character");
+            if(deletion)
             {
-                alert(data);
+                $.post('model/delete.php', {id: id}, function (data)
+                {
+                });
+                location.reload(true);
             }
-        })
-    })
+        });
+    </repeat>
+    </repeat>
 </script>
 </body>
 </html>
