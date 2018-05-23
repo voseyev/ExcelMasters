@@ -66,6 +66,8 @@ $f3 -> route('GET|POST /editReports', function($f3)
     $f3->set('reports',$reports);
     //Be able to delete reports
     //Be able to edit costs of certain report items
+    $data = selectCostNull();
+    $f3->set('data',$data);
 
 
     $template = new Template();

@@ -164,6 +164,21 @@ function selectData($start, $end)
 
 }
 
+function selectCostNull()
+{
+    global $dbh;
+
+
+    $sql = "SELECT *
+            FROM report_data WHERE cost is null ORDER BY title";
+    $statement = $dbh->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+
+
+}
+
 function deleteCharacter($id)
 {
     echo "Commencing deletion 2";
