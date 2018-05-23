@@ -1,13 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tony T
- * Date: 4/25/2018
- * Time: 11:01 PM
- * @author Anthony Thompson & Michael Horn & Vlad Oseyev
- * @version 1.0
- * Used for sending report data to the DB
- */
 if(empty($_SESSION['username']))
 {
     header("Location:inventory_management/ExcelMasters/");
@@ -34,11 +25,14 @@ if(isset($_POST['submit']))
     }
 }
 
+
 $reports = getReports();
 $f3->set('reports',$reports);
 
-
-$result = selectData(1,2);  //TODO replace with dates
+/*Date Picker Start and end Date*/
+$startDate = $_POST['startDate'];
+$endDate = $_POST['endDate'];
+$result = selectData($startDate, $endDate);
 $f3->set('data', $result);
 
 $template = new Template();
