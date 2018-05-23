@@ -155,7 +155,7 @@ function selectData($start, $end)
 
 
     $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost 
-            FROM report_data ORDER BY title";
+            FROM report_data ORDER BY title WHERE end_data = $start AND end_date = $end";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -169,7 +169,7 @@ function selectCostNull()
     global $dbh;
 
 
-    $sql = "SELECT *
+    $sql = "SELECT DISTINCT title
             FROM report_data WHERE cost is null ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
