@@ -155,7 +155,7 @@ function selectData($start, $end)
 
 
     $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost 
-            FROM report_data ORDER BY title WHERE end_data = $start AND end_date = $end";
+            FROM report_data ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -169,8 +169,8 @@ function selectCostNull()
     global $dbh;
 
 
-    $sql = "SELECT DISTINCT title
-            FROM report_data WHERE cost is null ORDER BY title";
+    $sql = "SELECT title, id
+            FROM report_data WHERE cost is null GROUP BY title ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -179,12 +179,30 @@ function selectCostNull()
 
 }
 
-function deleteCharacter($id)
+function deleteReport($id)
 {
-    echo "Commencing deletion 2";
     global $dbh;
     $sql = "DELETE FROM tbl_files WHERE id = :id";
     $statement = $dbh->prepare($sql);
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
     $statement->execute();
+}
+
+function deleteReportData($id)
+{
+    global $dbh;
+    $sql = "DELETE FROM report_data WHERE reportId = :id";
+    $statement = $dbh->prepare($sql);
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    $statement->execute();
+}
+
+function updateCost($title,$cost)
+{
+    global $dbh;
+    $sql = "UPDATE report_data SET cost = :cost WHERE title = :title";
+    $statement = $dbh->prepare($sql);
+    $statement->bindValue(':cost',$cost,PDO::PARAM_INT);
+    $statement->bindvalue(":title",$title,PDO::PARAM_STR);
+    $statement->exectute();
 }

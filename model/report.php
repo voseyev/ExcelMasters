@@ -13,6 +13,7 @@ if(isset($_POST['submit']))
 
     $lastId = uploadFile($fileName, $fileSize, $fileType, $fileData);
 
+    //Opens file contents into object
     $fp = fopen($_FILES['file']['tmp_name'],'rb');
     while(($line = fgets($fp)) !== false)
     {
