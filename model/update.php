@@ -7,8 +7,8 @@
  */
 require('dbfunctions.php');
 $dbh = connect();
-if (isset($_POST['cost']) && isset($_POST['title'])) { //if we get the name successfully
+if (isset($_POST['cost'])) {
     $cost = $_POST['cost'];
-    $title = $_POST['id'];
+    $title = $_POST['title'];
     updateCost($title,$cost);
 }

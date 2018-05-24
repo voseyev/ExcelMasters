@@ -90,7 +90,6 @@
     <repeat group="{{@data}}" value="{{@row}}">
             $("#{{@row['id']}}").click(function()
             {
-                alert("btn clicked");
                 var cost = $("#input{{@row['id']}}").val();
                 var title = "{{@row['title']}}";
                 var update = confirm("Are you sure you wish to update this cost?");
