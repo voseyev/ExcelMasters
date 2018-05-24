@@ -26,7 +26,7 @@ if(isset($_POST['submit']))
     }
 }
 
-
+//get data to display from database
 $reports = getReports();
 $f3->set('reports',$reports);
 
@@ -40,4 +40,3 @@ $f3->set('data', $result);
 
 $template = new Template();
 echo $template->render('views/reports.html');
-
