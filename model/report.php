@@ -33,6 +33,8 @@ $f3->set('reports',$reports);
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
 $result = selectData($startDate, $endDate);
+echo $startDate;
+echo $endDate;
 $f3->set('data', $result);
 
 $template = new Template();
