@@ -26,20 +26,18 @@ if(isset($_POST['submit']))
     }
 }
 
-//get data to display from database
-$reports = getReports();
-$f3->set('reports',$reports);
 
 /*Date Picker Start and end Date*/
-$startDate = $_POST['startDate'];
-$endDate = $_POST['endDate'];
-$result = selectData($startDate, $endDate);
 if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
-    echo "Hello";
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $result = selectData($startDate, $endDate);
+
+    //get data to display from database
+    $reports = getReports();
+    $f3->set('reports',$reports);
+
 }
-echo "Bye";
-echo $startDate;
-echo $endDate;
 $f3->set('data', $result);
 
 $template = new Template();
