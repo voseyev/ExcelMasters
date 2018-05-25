@@ -34,6 +34,10 @@ $f3->set('reports',$reports);
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
 $result = selectData($startDate, $endDate);
+if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
+    echo "Hello";
+}
+echo "Bye";
 echo $startDate;
 echo $endDate;
 $f3->set('data', $result);
