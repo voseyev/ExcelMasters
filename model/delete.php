@@ -10,5 +10,5 @@ $dbh = connect();
 if (isset($_POST['id'])) { //if we get the name successfully
     $id = $_POST['id'];
     deleteReport($id);
-    //deleteReportData($id);
+    deleteReportData($id);
 }

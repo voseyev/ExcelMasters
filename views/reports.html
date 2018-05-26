@@ -16,7 +16,7 @@
     <div class="container" id="maindiv"><!-- TODO change to "container-fluid"  -->
         <div class="row" id="col1">
             <form method="post" action="#" enctype="multipart/form-data">
-                <input class="btn btn-default" type="file" name="file" id="myFile" hidden>
+                <input class="btn btn-default" type="file" name="file" id="myFile">
                 <br>
                 <input class="btn" type="submit" name="submit" value="Upload" id="submit">
             </form>
@@ -105,6 +105,7 @@
                     <th>Winning Bid</th>
                     <th>Pristine Share</th>
                     <th>Consignor</th>
+                    <th>Cost</th>
                     <th>Profit Margin</th>
                 </tr>
 
@@ -119,6 +120,7 @@
                         <td>{{@row['pristine']}}</td>
                         <td>{{@row['cosignor']}}</td>
                         <td>{{@row['cost']}}</td>
+                        <td>In Progress</td>
                     </tr>
                 </repeat>
 
