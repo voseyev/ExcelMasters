@@ -26,6 +26,24 @@ if(isset($_POST['submit']))
     }
 }
 
+$currentDate = strftime('%F');
+$currentDate = '2018-03-10';
+echo $currentDate . "     ";
+
+
+$currentDate = explode('-', $currentDate);
+$year = $currentDate[0];
+$month   = $currentDate[1];
+$day  = $currentDate[2];
+
+$day = '01';
+
+$firstDayOfMonth = $year . "-" . $month . "-" . $day;
+
+echo " " . $firstDayOfMonth;
+
+
+selectData($currentDate, $firstDayOfMonth);
 
 /*Date Picker Start and end Date*/
 if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
