@@ -26,8 +26,9 @@ if(isset($_POST['submit']))
     }
 }
 
-$currentDate = strftime('%F');
-$currentDate = '2018-03-10';
+//$currentDate = strftime('%F');
+echo "Todays date (revised to march)"  . " ";
+$currentDate = '2018-03-10' . "//////";
 echo $currentDate . "     ";
 
 
@@ -39,7 +40,7 @@ $day  = $currentDate[2];
 $day = '01';
 
 $firstDayOfMonth = $year . "-" . $month . "-" . $day;
-
+echo " " . "First day of current days month";
 echo " " . $firstDayOfMonth;
 
 
@@ -54,9 +55,9 @@ if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
     //get data to display from database
     $reports = getReports();
     $f3->set('reports',$reports);
+    $f3->set('data', $result);
 
 }
-$f3->set('data', $result);
 
 $template = new Template();
 echo $template->render('views/reports.html');
