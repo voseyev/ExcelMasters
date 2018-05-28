@@ -171,20 +171,15 @@
         // create ethnicity pie chart
         function drawChart() {
             // send to data table
-            /*
-            ['text',2,4],
-            ['hhh',6,8],
-            ['ddb',3,7]
-            */
+            //repeat statement causes errors in phpStorm but is correct as is
             var data = google.visualization.arrayToDataTable([
                 ['Title', 'Win']
                 <repeat group="{{@data}}" value="{{@row}}">
                     ,['{{ @row["title"] }}', {{ @row['win'] }}]
                 </repeat>
-
             ]);
             // customize chart
-            var options = {
+            var options = {  //TODO change chart style
                 title: 'Summary',
                 is3D: true
             };
