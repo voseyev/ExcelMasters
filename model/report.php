@@ -32,7 +32,6 @@ if(isset($_POST['submit']))
 
 /* Setting date range for select data*/
 if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
-    echo "post set";
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
 } else {  //if search not sent use default date
