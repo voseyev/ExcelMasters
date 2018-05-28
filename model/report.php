@@ -57,6 +57,54 @@ if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
     $f3->set('reports',$reports);
     $f3->set('data', $result);
 
+
+    $numRows = 0;
+    $numCost = 0;
+    $totalWin = 0;
+    $totalCons = 0;
+    $totalCost = 0;
+    $totalMargin = 0;
+    foreach ($result as $row => $item) {
+        //returned columns
+        //item_num, title, end_date, win, pristine, cosignor, cost
+        //print_r($item);
+        $numRows++;
+        $totalWin += $item['win'];
+        $totalCons += $item['cosignor'];
+        if ($item['cost'] != null) {
+            $totalCost += $item['cost'];
+            $numCost++;
+        }
+        if ($item['profit'] != null) $totalMargin += $item['profit'];
+    }
+    if ($numCost != 0) {
+        $avgWin = $totalWin / $numRows;
+        $avgCons = $totalCons / $numRows;
+        $avgCost = $totalCost / $numCost;
+        $avgMargin = $totalMargin / $numCost;
+    } else if ($numRows != 0) {
+        $avgWin = $totalWin / $numRows;
+        $avgCons = $totalCons / $numRows;
+        $avgCost = 0;
+        $avgMargin = 0;
+    } else {
+        $avgWin = 0;
+        $avgCons = 0;
+        $avgCost = 0;
+        $avgMargin = 0;
+    }
+    $f3->set('startDate', $startDate);
+    $f3->set('endDate', $endDate);
+    $f3->set('totalItems', $numRows);
+    $f3->set('totalNoCost', $numRows - $numCost);
+    $f3->set('totalWin', $totalWin);
+    $f3->set('totalCons', $totalCons);
+    $f3->set('totalCost', $totalCost);
+    $f3->set('totalMargin', $totalMargin);
+    $f3->set('avgWin', $avgWin);
+    $f3->set('avgCons', $avgCons);
+    $f3->set('avgCost', $avgCost);
+    $f3->set('avgMargin', $avgMargin);
 }
 
 $template = new Template();

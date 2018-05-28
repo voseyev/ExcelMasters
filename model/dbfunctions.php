@@ -153,10 +153,7 @@ function selectData($start, $end)
 {
     global $dbh;
 
-
-
-
-    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost 
+    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost, profit 
             FROM report_data WHERE end_date >= :startdate and end_date <= :enddate ORDER BY end_date";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':startdate',$start,PDO::PARAM_INT);
@@ -164,8 +161,6 @@ function selectData($start, $end)
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
-
-
 }
 
 function selectCostNull()
