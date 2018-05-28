@@ -133,6 +133,7 @@
     </div><!-- end MAIN CONTAINER  ->
 
 
+
     <!--  JAVASCRIPT  -->
     <!--  jQuery  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -170,16 +171,17 @@
         // create ethnicity pie chart
         function drawChart() {
             // send to data table
+            /*
+            ['text',2,4],
+            ['hhh',6,8],
+            ['ddb',3,7]
+            */
             var data = google.visualization.arrayToDataTable([
-                ['Title', 'Win', 'more'],
-                ['text',2,4],
-                ['hhh',6,8],
-                ['ddb',3,7]
-                /*
+                ['Title', 'Win']
                 <repeat group="{{@data}}" value="{{@row}}">
-                    [{{ @row['title'] }}, {{ @row['win'] }}],
+                    ,['{{ @row["title"] }}', {{ @row['win'] }}]
                 </repeat>
-                */
+
             ]);
             // customize chart
             var options = {
@@ -187,7 +189,7 @@
                 is3D: true
             };
             // draw chart at id
-            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
     </script>
