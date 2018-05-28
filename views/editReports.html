@@ -92,10 +92,11 @@
             {
                 var cost = $("#input{{@row['id']}}").val();
                 var title = "{{@row['title']}}";
+                var cosignor = "{{@row['cosignor']}}";
                 var update = confirm("Are you sure you wish to update this cost?");
                 if(update)
                 {
-                    $.post('{{@BASE}}/model/update.php', {title: title, cost: cost}, function (data)
+                    $.post('{{@BASE}}/model/update.php', {title: title, cost: cost, cosignor: cosignor}, function (data)
                     {
 
                     });

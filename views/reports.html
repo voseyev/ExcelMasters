@@ -38,8 +38,8 @@
         <div class="row">
             <div class="col">
                 <form action="#" method="post">
-                    <input type="date" name="startDate" id="startDate" style="margin-left: 350px">
-                    <input type="date" name="endDate" id="endDate" style="margin-left: 0px">
+                    <input type="date" value="{{@startDate}}" name="startDate" id="startDate" style="margin-left: 350px">
+                    <input type="date" value="{{@endDate}}" name="endDate" id="endDate" style="margin-left: 0px">
                     <button onclick="myFunction()" type="submit" name="datesearch" id="dateButton">Search Date</button>
                 </form>
                 <p id="showDate"></p>
@@ -52,12 +52,11 @@
         <!--  Report Summary  -->
         <div class="row">
             <div class="col">
-                <h4>Total Items: {{@total}}</h4>
-                <p>{{@startDate}} - {{@endDate}}</p>
+                <h4>Total Items: {{@totalItems}}</h4>
+                <h5>Items without cost data: {{@totalNoCost}}</h5>
+                <h5>{{@startDate}} / {{@endDate}}</h5>
             </div>
-        </div>
-        <div class="row">
-            <div class="col table-responsive">
+            <div class="col-8 table-responsive">
                 <table id="table" class="table table-hover">
                     <thead>
                     <tr>
@@ -73,18 +72,18 @@
                     <!-- average  -->
                     <tr>
                         <td>Average</td>
-                        <td>$40</td>
-                        <td>$200</td>
-                        <td>$8,000</td>
-                        <td>$524</td>
+                        <td>{{ @avgWin }}</td>
+                        <td>{{ @avgCons }}</td>
+                        <td>{{ @avgCost }}</td>
+                        <td>{{ @avgMargin }}</td>
                     </tr>
                     <!-- total  -->
                     <tr>
                         <td>Total</td>
-                        <td>$400</td>
-                        <td>$2000</td>
-                        <td>$8,0000</td>
-                        <td>$5204</td>
+                        <td>{{ @totalWin }}</td>
+                        <td>{{ @totalCons }}</td>
+                        <td>{{ @totalCost }}</td>
+                        <td>{{ @totalMargin }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -94,19 +93,23 @@
         </div>
         <!-- end Report Summary -->
 
+        <div class="row">
+            <div id="chart_div"></div>
+        </div>
+
         <!--  Data table  -->
         <div class="row">
-            <table id="datatable" class="table compact table-bordered display">
+            <table id="datatable" class="table barChart compact table-bordered display">
                 <thead>
                 <tr>
-                    <th>Item Number</th>
-                    <th>Title</th>
-                    <th>End Date</th>
-                    <th>Winning Bid</th>
-                    <th>Pristine Share</th>
-                    <th>Consignor</th>
-                    <th>Cost</th>
-                    <th>Profit Margin</th>
+                    <th data-type="string">Item Number</th>
+                    <th data-type="string">Title</th>
+                    <th data-type="date">End Date</th>
+                    <th data-type="number">Winning Bid</th>
+                    <th data-type="number">Pristine Share</th>
+                    <th data-type="number">Consignor</th>
+                    <th data-type="number">Cost</th>
+                    <th data-type="number">Profit Margin</th>
                 </tr>
 
                 </thead>
@@ -120,7 +123,7 @@
                         <td>{{@row['pristine']}}</td>
                         <td>{{@row['cosignor']}}</td>
                         <td>{{@row['cost']}}</td>
-                        <td>In Progress</td>
+                        <td>{{@row['profit']}}</td>
                     </tr>
                 </repeat>
 
@@ -128,6 +131,7 @@
             </table>
         </div>
     </div><!-- end MAIN CONTAINER  ->
+
 
 
     <!--  JAVASCRIPT  -->
@@ -140,8 +144,50 @@
             charset="utf8"></script>
     <!--  Bootstrap  -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <!--  Google  -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!--  Other  -->
     <script src="js/reports.js"></script>
+    <script src="js/chartinator.js" ></script>
+
+    <script type="text/javascript">
+        /*
+        <repeat group="{{@data}}" value="{{@row}}">
+                    <tr>
+                        <td>{{@row['item_num']}}</td>
+                        <td>{{@row['title']}}</td>
+                        <td>{{@row['end_date']}}</td>
+                        <td>{{@row['win']}}</td>
+                        <td>{{@row['pristine']}}</td>
+                        <td>{{@row['cosignor']}}</td>
+                        <td>{{@row['cost']}}</td>
+                        <td>{{@row['profit']}}</td>
+                    </tr>
+                </repeat>
+         */
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        // create ethnicity pie chart
+        function drawChart() {
+            // send to data table
+            //repeat statement causes errors in phpStorm but is correct as is
+            var data = google.visualization.arrayToDataTable([
+                ['Title', 'Win']
+                <repeat group="{{@data}}" value="{{@row}}">
+                    ,['{{ @row["title"] }}', {{ @row['win'] }}]
+                </repeat>
+            ]);
+            // customize chart
+            var options = {  //TODO change chart style
+                title: 'Summary',
+                is3D: true
+            };
+            // draw chart at id
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+
     </body>
     </html>
