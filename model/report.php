@@ -44,7 +44,6 @@ if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
     $month = $startDate[1];
     $day = '01';
     $startDate = $year . "-" . $month . "-" . $day;
-    echo "Tony: " . $startDate . "xxx" . $endDate;
 }
 //get item data
 $result = selectData($startDate, $endDate);
