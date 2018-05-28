@@ -78,5 +78,11 @@ $f3-> route('GET|POST /upload', function($f3) {
     echo $template->render('views/upload.html');
 });
 
+//test
+$f3-> route('GET|POST /test', function($f3) {
+    $template = new Template();
+    echo $template->render('views/test.html');
+});
+
 //Run Fat-Free Framework
 $f3->run();

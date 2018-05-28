@@ -38,7 +38,7 @@ if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
 } else {  //if search not sent use default date
     //$currentDate = strftime('%F');
     //TODO change back to dynamic current date
-    $endDate = '2018-03-10' . "//////";
+    $endDate = '2018-03-10';
     $startDate = explode('-', $endDate);
     $year = $startDate[0];
     $month = $startDate[1];
