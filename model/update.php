@@ -10,5 +10,8 @@ $dbh = connect();
 if (isset($_POST['cost'])) {
     $cost = $_POST['cost'];
     $title = $_POST['title'];
+    $cosignor = $_POST['cosignor'];
+    $profit = $cosignor - $cost;
     updateCost($title,$cost);
+    updateProfit($title,$profit);
 }

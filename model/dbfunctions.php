@@ -166,7 +166,7 @@ function selectData($start, $end)
 function selectCostNull()
 {
     global $dbh;
-    $sql = "SELECT title, id
+    $sql = "SELECT title, id, cosignor
             FROM report_data WHERE cost is null GROUP BY title ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
@@ -203,6 +203,22 @@ function updateCost($title,$cost)
     $statement = $dbh->prepare($sql);
 
     $statement->bindValue(':cost',$cost,PDO::PARAM_INT);
+    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
+
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function updateProfit($title,$profit)
+{
+
+    global $dbh;
+    $sql = "UPDATE report_data
+            SET profit = :profit WHERE title = :title";
+    $statement = $dbh->prepare($sql);
+
+    $statement->bindValue(':profit',$profit,PDO::PARAM_INT);
     $statement->bindvalue(':title',$title,PDO::PARAM_STR);
 
     $statement->execute();
