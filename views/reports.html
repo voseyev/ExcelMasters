@@ -72,18 +72,18 @@
                     <!-- average  -->
                     <tr>
                         <td>Average</td>
-                        <td>{{ @avgWin }}</td>
-                        <td>{{ @avgCons }}</td>
-                        <td>{{ @avgCost }}</td>
-                        <td>{{ @avgMargin }}</td>
+                        <td class="text-xs-right">{{ @avgWin }}</td>
+                        <td class="text-xs-right">{{ @avgCons }}</td>
+                        <td class="text-xs-right">{{ @avgCost }}</td>
+                        <td class="text-xs-right">{{ @avgMargin }}</td>
                     </tr>
                     <!-- total  -->
                     <tr>
                         <td>Total</td>
-                        <td>{{ @totalWin }}</td>
-                        <td>{{ @totalCons }}</td>
-                        <td>{{ @totalCost }}</td>
-                        <td>{{ @totalMargin }}</td>
+                        <td class="text-xs-right">{{ @totalWin }}</td>
+                        <td class="text-xs-right">{{ @totalCons }}</td>
+                        <td class="text-xs-right">{{ @totalCost }}</td>
+                        <td class="text-xs-right">{{ @totalMargin }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -118,7 +118,7 @@
                     <tr>
                         <td>{{@row['item_num']}}</td>
                         <td>{{@row['title']}}</td>
-                        <td>{{@row['end_date']}}</td>
+                        <td  class="text-nowrap">{{@row['end_date']}}</td>
                         <td>{{@row['win']}}</td>
                         <td>{{@row['pristine']}}</td>
                         <td>{{@row['cosignor']}}</td>
