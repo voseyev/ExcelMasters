@@ -18,12 +18,12 @@
 
         <!--Date Picker-->
         <div class="row">
-            <div class="col">
+            <div class="col text-center">
                 <form action="#" method="post">
-                    <input type="date" value="{{@startDate}}" name="startDate" id="startDate"
-                           style="margin-left: 350px">
-                    <input type="date" value="{{@endDate}}" name="endDate" id="endDate" style="margin-left: 0px">
-                    <button onclick="myFunction()" type="submit" name="datesearch" id="dateButton">Search Date</button>
+                    <!--  style="margin-left: 350px"    style="margin-left: 0px" -->
+                    <input type="date" value="{{@startDate}}" name="startDate" id="startDate">
+                    <input type="date" value="{{@endDate}}" name="endDate" id="endDate">
+                    <button type="submit" name="datesearch" id="dateButton">Search Date</button>
                 </form>
                 <p id="showDate"></p>
                 <p id="showDate2" style="margin-left: 10px"></p>
@@ -34,21 +34,16 @@
 
         <!--  Report Summary  -->
         <div class="row">
-            <br>
-            <div class="col">
+            <div class="col text-center">
                 <h4>Total Items: {{@totalItems}}</h4>
                 <h5>Items without cost data: {{@totalNoCost}}</h5>
                 <!--  <h5>{{@startDate}} / {{@endDate}}</h5>  //not needed since date picker sticky -->
             </div>
-            <div class="col-12">
-                <div id="chart_div" style="min-height: 450px;"></div>
-            </div>
-
         </div>
 
-        <!--  Table Summary  -->
-        <div class="row">
-            <div class="col">
+        <div class="row justify-content-md-center">
+            <div class="col-6">
+                <!--  Table Summary  -->
                 <table id="table" class="table table-hover">
                     <thead>
                     <tr>
@@ -80,12 +75,21 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <!--  Chart  -->
+        <div class="row">
+            <div class="col-12">
+                <div id="chart_div" style="min-height: 450px;"></div>
+            </div>
         </div><!--  end Table Summary  -->
         <!-- end Report Summary -->
 
 
         <!--  Data table  -->
         <div class="row">
+            <div class="col">
+                <hr>
             <table id="datatable" class="table barChart compact table-bordered display">
                 <thead>
                 <tr>
@@ -116,17 +120,20 @@
 
                 </tbody>
             </table>
+            </div>
         </div>
 
         <!--  Upload File Button  -->
         <div class="row" id="col1">
             <div class="col text-center">
                 <hr>
-                <br>
+                <h5>Upload CSV report files</h5>
                 <form method="post" action="#" enctype="multipart/form-data">
                     <input class="btn btn-default" type="file" name="file" id="myFile">
                     <input class="btn" type="submit" name="submit" value="Upload" id="submit">
                 </form>
+                <br>
+                <br>
             </div>
         </div>
         <!--<div class="row" id="col2">
