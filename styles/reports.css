@@ -8,6 +8,7 @@
 }
 nav{
     margin-bottom:30px;
+    background-color: black;
 }
 #logout{
     text-align:right;
@@ -21,4 +22,8 @@ td,th{
 }
 input, btn,select{
     margin:7px;
+}
+
+#logo {
+    border-radius: 50%;
 }

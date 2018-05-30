@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<include href="views/css.html">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +18,7 @@
     <title>View/Edit Reports</title>
 </head>
 <body>
+<include href="views/css.html"></include>
 <nav class="navbar bg-light navbar-light">
     <h2>Inventory Management</h2>
     <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/reports"><h4>Reports</h4></a>
@@ -115,5 +115,9 @@
 
     </repeat>
 </script>
+
+<form action="reports" method="post">
+    <input class="btn" type="submit" name="submit" value="Back To Reports">
+</form>
 </body>
 </html>

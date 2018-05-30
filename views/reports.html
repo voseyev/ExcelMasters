@@ -1,14 +1,14 @@
-<!-- this include prints out the contents of css.html -->
-<include href="views/css.html">
-
+<head>
     <title>Reports Page</title>
-    </head>
-
+    <include href="views/css.html"></include>
+</head>
 
     <body>
+    <!-- this include prints out the contents of css.html -->
     <nav class="navbar bg-light navbar-light">
-        <h2>Inventory Management</h2>
-        <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/editReports"><h4>Edit Reports</h4></a>
+        <!--<h2>Inventory Management</h2>-->
+        <img id="logo" src="images/TimelessLogo.png" width="400" height="125" title="Company Logo"/>
+        <!--<a class="nav-item nav-link" href="/inventory_management/ExcelMasters/editReports"><h4>Edit Reports</h4></a>-->
         <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/" id="logout">Logout</a>
     </nav>
 
@@ -16,35 +16,47 @@
     <div class="container-fluid" id="maindiv"><!-- TODO change to "container-fluid"  -->
 
 
-        <!--Date Picker-->
         <div class="row">
             <div class="col text-center">
+                <form action="#" method="post" enctype="multipart/form-data">
+                    <!--  Upload File Button  -->
+                    <input class="btn btn-default" type="file" name="file" id="myFile">
+                    <input class="button" type="submit" name="submit" value="Upload" id="submit">
+                </form>
                 <form action="#" method="post">
-                    <!--  style="margin-left: 350px"    style="margin-left: 0px" -->
+                    <!--Datepicker-->
                     <input type="date" value="{{@startDate}}" name="startDate" id="startDate">
                     <input type="date" value="{{@endDate}}" name="endDate" id="endDate">
                     <button type="submit" name="datesearch" id="dateButton">Search Date</button>
                 </form>
-                <p id="showDate"></p>
-                <p id="showDate2" style="margin-left: 10px"></p>
-                <hr>
             </div>
         </div>
 
 
         <!--  Report Summary  -->
-        <div class="row">
-            <div class="col text-center">
-                <h4>Total Items: {{@totalItems}}</h4>
-                <h5>Items without cost data: {{@totalNoCost}}</h5>
-                <!--  <h5>{{@startDate}} / {{@endDate}}</h5>  //not needed since date picker sticky -->
-            </div>
-        </div>
+        <!--<div class="row">-->
+            <!--<div class="col text-center">-->
+                <!--<h4>Total Items: {{@totalItems}}</h4>-->
+                <!--<h5>Items without cost data: {{@totalNoCost}}</h5>-->
+                <!--&lt;!&ndash;  <h5>{{@startDate}} / {{@endDate}}</h5>  //not needed since date picker sticky &ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
+
 
         <div class="row justify-content-md-center">
+
+
             <div class="col-6">
                 <!--  Table Summary  -->
                 <table id="table" class="table table-hover">
+                    <br>
+
+                    <!--  Report Summary  -->
+                    <div class="col text-center">
+                        <h4>Total Items: {{@totalItems}} /  Items without cost data: {{@totalNoCost}}</h4>
+                    </div>
+
+                    <br>
                     <thead>
                     <tr>
                         <th></th>
@@ -74,17 +86,48 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="col text-right">
+                <form action="editReports" method="post">
+                    <!--Edit Reports / Button-->
+                    <input id="button" type="submit" name="submit" value="Edit Reports">
+                </form>
+                </div>
             </div>
         </div>
 
+        <style>
+            .hidden{
+                display:none;
+            }
+
+            .unhidden{
+                display:block;
+            }
+        </style>
+        <script type="text/javascript">
+            function unhide(clickedButton, formId) {
+                var item = document.getElementById(formId);
+                if (item) {
+                    if(item.className=='hidden'){
+                        item.className = 'unhidden' ;
+                        clickedButton.value = 'Hide Graph'
+                    }else{
+                        item.className = 'hidden';
+                        clickedButton.value = 'Show Graph'
+                    }
+                }}
+
+        </script>
+
+
+        <input type="button" onclick="unhide(this, 'Chart') " value="Hide Graph">
         <!--  Chart  -->
-        <div class="row">
+        <div id="Chart"  class="row" >
             <div class="col-12">
                 <div id="chart_div" style="min-height: 450px;"></div>
             </div>
         </div><!--  end Table Summary  -->
         <!-- end Report Summary -->
-
 
         <!--  Data table  -->
         <div class="row">
@@ -123,19 +166,22 @@
             </div>
         </div>
 
-        <!--  Upload File Button  -->
-        <div class="row" id="col1">
-            <div class="col text-center">
-                <hr>
-                <h5>Upload CSV report files</h5>
-                <form method="post" action="#" enctype="multipart/form-data">
-                    <input class="btn btn-default" type="file" name="file" id="myFile">
-                    <input class="btn" type="submit" name="submit" value="Upload" id="submit">
-                </form>
-                <br>
-                <br>
-            </div>
-        </div>
+        <!--&lt;!&ndash;  Upload File Button  &ndash;&gt;-->
+        <!--<div class="row" id="col1">-->
+            <!--<div class="col text-center">-->
+                <!--<hr>-->
+                <!--<h5>Upload CSV report files</h5>-->
+                <!--<form method="post" action="#" enctype="multipart/form-data">-->
+                    <!--<input class="btn btn-default" type="file" name="file" id="myFile">-->
+                    <!--<input class="button" type="submit" name="submit" value="Upload" id="submit">-->
+                <!--</form>-->
+                <!--<form action="editReports" method="post">-->
+                    <!--<input id="button" type="submit" name="submit" value="Edit Reports">-->
+                <!--</form>-->
+                <!--<br>-->
+                <!--<br>-->
+            <!--</div>-->
+        <!--</div>-->
         <!--<div class="row" id="col2">
             <div class="col">
                 <select name="report" id="report">
