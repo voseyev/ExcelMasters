@@ -25,8 +25,6 @@
                     <input type="date" value="{{@endDate}}" name="endDate" id="endDate">
                     <button type="submit" name="datesearch" id="dateButton">Search Date</button>
                 </form>
-                <p id="showDate"></p>
-                <p id="showDate2" style="margin-left: 10px"></p>
                 <hr>
             </div>
         </div>
@@ -48,10 +46,10 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>Winning Bid</th>
-                        <th>Consignor Cut</th>
-                        <th>Item Cost</th>
-                        <th>Profit Margin</th>
+                        <th class="text-right">Winning Bid</th>
+                        <th class="text-right">Consignor Cut</th>
+                        <th class="text-right">Item Cost</th>
+                        <th class="text-right">Profit Margin</th>
                     </tr>
                     </thead>
 
@@ -59,18 +57,18 @@
                     <!-- average  -->
                     <tr>
                         <td>Average</td>
-                        <td class="text-xs-right">{{ @avgWin }}</td>
-                        <td class="text-xs-right">{{ @avgCons }}</td>
-                        <td class="text-xs-right">{{ @avgCost }}</td>
-                        <td class="text-xs-right">{{ @avgMargin }}</td>
+                        <td class="text-right">{{ @avgWin }}</td>
+                        <td class="text-right">{{ @avgCons }}</td>
+                        <td class="text-right">{{ @avgCost }}</td>
+                        <td class="text-right">{{ @avgMargin }}</td>
                     </tr>
                     <!-- total  -->
                     <tr>
                         <td>Total</td>
-                        <td class="text-xs-right">{{ @totalWin }}</td>
-                        <td class="text-xs-right">{{ @totalCons }}</td>
-                        <td class="text-xs-right">{{ @totalCost }}</td>
-                        <td class="text-xs-right">{{ @totalMargin }}</td>
+                        <td class="text-right">{{ @totalWin }}</td>
+                        <td class="text-right">{{ @totalCons }}</td>
+                        <td class="text-right">{{ @totalCost }}</td>
+                        <td class="text-right">{{ @totalMargin }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -80,6 +78,7 @@
         <!--  Chart  -->
         <div class="row">
             <div class="col-12">
+                <hr>
                 <div id="chart_div" style="min-height: 450px;"></div>
             </div>
         </div><!--  end Table Summary  -->
