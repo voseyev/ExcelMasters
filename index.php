@@ -67,6 +67,9 @@ $f3 -> route('GET|POST /editReports', function($f3)
     $data = selectCostNull();
     $f3->set('data',$data);
 
+    $data2 = selectQuantity();
+    $f3->set('data2',$data2);
+
     $template = new Template();
     echo $template->render('views/editReports.html');
 });

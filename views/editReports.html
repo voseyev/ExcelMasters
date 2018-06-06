@@ -66,7 +66,27 @@
 
             </tbody>
         </table>
-    </div>
+
+        </div>
+
+            <div class="row">
+            <table id="datatable3" class="table table-striped table-bordered display">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <repeat group="{{@data2}}" value="{{@row}}">
+                    <tr>
+                        <td>{{@row['title']}}</td>
+                        <td><input type="text" placeholder = "0" id="quant{{@row['id']}}"><button id="btnquant{{@row['id']}}">Update</button></td>
+                    </tr>
+                </repeat>
+                </tbody>
+            </table>
+            </div>
     </div>
 <script type="text/javascript">
     <repeat group="{{ @reports }}" value="{{ @report }}">
@@ -116,8 +136,38 @@
     </repeat>
 </script>
 
-<form action="reports" method="post">
-    <input class="btn" type="submit" name="submit" value="Back To Reports">
-</form>
+<script>
+    <repeat group="{{@data2}}" value="{{@row}}">
+        $("#btnquant{{@row['id']}}").click(function()
+        {
+            var quantity = $("#quant{{@row['id']}}").val();
+            alert(quantity);
+            if (!isNaN(quantity) || quantity.toString().indexOf('.') != -1) {
+                var title = "{{@row['title']}}";
+                var update = confirm("Are you sure you wish to update this quantity?");
+                if (update) {
+                    $.post('{{@BASE}}/model/updateQuantity.php', {
+                        title: title,
+                        quantity: quantity
+                    }, function (data) {
+
+                    });
+                    location.reload(true);
+                }
+            }
+            else
+            {
+                alert("Quantity needs to be a number");
+            }
+        });
+
+    </repeat>
+</script>
+
+
+
+<!--<form action="reports" method="post">-->
+    <!--<input class="btn" type="submit" name="submit" value="Back To Reports">-->
+<!--</form>-->
 </body>
 </html>
