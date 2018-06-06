@@ -146,6 +146,7 @@
                     <th data-type="number">Consignor</th>
                     <th data-type="number">Cost</th>
                     <th data-type="number">Profit Margin</th>
+                    <th data-type="number">Percent Margin</th>
                 </tr>
 
                 </thead>
@@ -160,6 +161,7 @@
                         <td>{{@row['cosignor']}}</td>
                         <td>{{@row['cost']}}</td>
                         <td>{{@row['profit']}}</td>
+                        <td>{{@row['percent_margin']}}</td>
                     </tr>
                 </repeat>
 
@@ -167,35 +169,6 @@
             </table>
             </div>
         </div>
-
-        <!--&lt;!&ndash;  Upload File Button  &ndash;&gt;-->
-        <!--<div class="row" id="col1">-->
-            <!--<div class="col text-center">-->
-                <!--<hr>-->
-                <!--<h5>Upload CSV report files</h5>-->
-                <!--<form method="post" action="#" enctype="multipart/form-data">-->
-                    <!--<input class="btn btn-default" type="file" name="file" id="myFile">-->
-                    <!--<input class="button" type="submit" name="submit" value="Upload" id="submit">-->
-                <!--</form>-->
-                <!--<form action="editReports" method="post">-->
-                    <!--<input id="button" type="submit" name="submit" value="Edit Reports">-->
-                <!--</form>-->
-                <!--<br>-->
-                <!--<br>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row" id="col2">
-            <div class="col">
-                <select name="report" id="report">
-                    <repeat group="{{@reports}}" value="{{@report}}">
-                        <option>{{@report['name']}}</option>
-                    </repeat>
-                </select>
-                <button class="btn btn-default" name="show" id="show">Show</button>
-                <hr>
-            </div>
-        </div>-->
-
     </div><!-- end MAIN CONTAINER  ->
 
 
@@ -221,20 +194,6 @@
     <script src="js/chartinator.js"></script>
 
     <script type="text/javascript">
-        /*
-        <repeat group="{{@data}}" value="{{@row}}">
-                    <tr>
-                        <td>{{@row['item_num']}}</td>
-                        <td>{{@row['title']}}</td>
-                        <td>{{@row['end_date']}}</td>
-                        <td>{{@row['win']}}</td>
-                        <td>{{@row['pristine']}}</td>
-                        <td>{{@row['cosignor']}}</td>
-                        <td>{{@row['cost']}}</td>
-                        <td>{{@row['profit']}}</td>
-                    </tr>
-                </repeat>
-         */
 
         google.charts.load("current", {packages: ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);

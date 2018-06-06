@@ -14,4 +14,7 @@ if (isset($_POST['cost'])) {
     $profit = $cosignor - $cost;
     updateCost($title,$cost);
     updateProfit($title,$profit);
+    $percentMargin = (($cosignor - $cost) / $cosignor) * 100;
+    addPercentMargin($title, $percentMargin);
+
 }

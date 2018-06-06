@@ -122,6 +122,7 @@ function sendData($id,$title,$date,$win,$pristine,$cosignor, $reportId)
     }
     $date = $dateArr[2] . "-" . $dateArr[0] . "-" . $dateArr[1];
 
+
     //Removing dollar sign from costs, functionality moved to a different file later
     $win = str_replace("$","",$win);
     $pristine = str_replace("$","",$pristine);
@@ -153,7 +154,7 @@ function selectData($start, $end)
 {
     global $dbh;
 
-    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost, profit 
+    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost, profit, percent_margin 
             FROM report_data WHERE end_date >= :startdate and end_date <= :enddate ORDER BY end_date";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':startdate',$start,PDO::PARAM_INT);
@@ -219,6 +220,21 @@ function updateProfit($title,$profit)
     $statement = $dbh->prepare($sql);
 
     $statement->bindValue(':profit',$profit,PDO::PARAM_INT);
+    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
+
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function addPercentMargin($title,$percentMargin) {
+
+    global $dbh;
+    $sql = "UPDATE report_data
+            SET percent_margin = :percent_margin WHERE title = :title";
+    $statement = $dbh->prepare($sql);
+
+    $statement->bindValue(':percent_margin',$percentMargin,PDO::PARAM_INT);
     $statement->bindvalue(':title',$title,PDO::PARAM_STR);
 
     $statement->execute();
