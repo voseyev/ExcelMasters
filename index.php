@@ -65,6 +65,7 @@ $f3 -> route('GET|POST /editReports', function($f3)
     //Be able to delete reports
     //Be able to edit costs of certain report items
     $data = selectCostNull();
+    print_r($data);
     $f3->set('data',$data);
 
     $data2 = selectQuantity();
@@ -85,6 +86,15 @@ $f3-> route('GET|POST /upload', function($f3) {
 $f3-> route('GET|POST /test', function($f3) {
     $template = new Template();
     echo $template->render('views/test.html');
+});
+
+$f3-> route('GET|POST /edit', function($f3) {
+    if(empty($_SESSION['username']))
+    {
+        header("Location:inventory_management/ExcelMasters/");
+    }
+    $template = new Template();
+    echo $template->render('views/admin.html');
 });
 
 //Run Fat-Free Framework
