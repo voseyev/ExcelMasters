@@ -15,7 +15,7 @@
 
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js" type="text/javascript" charset="utf8"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript" charset="utf8"></script>
-    <title>View/Edit Reports</title>
+    <title>To Do</title>
 </head>
 <body>
 <include href="views/css.html"></include>
@@ -111,29 +111,29 @@
 
 <script>
     <repeat group="{{@data}}" value="{{@row}}">
-            $("#{{@row['id']}}").click(function()
-            {
-                var cost = $("#input{{@row['id']}}").val();
-                if (!isNaN(cost) && cost.toString().indexOf('.') != -1) {
-                    var title = "{{@row['title']}}";
-                    var cosignor = "{{@row['cosignor']}}";
-                    var update = confirm("Are you sure you wish to update this cost?");
-                    if (update) {
-                        $.post('{{@BASE}}/model/update.php', {
-                            title: title,
-                            cost: cost,
-                            cosignor: cosignor
-                        }, function (data) {
+        $("#{{@row['id']}}").click(function()
+        {
+            var cost = $("#input{{@row['id']}}").val();
+            if (!isNaN(cost) || cost.toString().indexOf('.') != -1) {
+                var title = "{{@row['title']}}";
+                var cosignor = "{{@row['cosignor']}}";
+                var update = confirm("Are you sure you wish to update this cost?");
+                if (update) {
+                    $.post('{{@BASE}}/model/update.php', {
+                        title: title,
+                        cost: cost,
+                        cosignor: cosignor
+                    }, function (data) {
 
-                        });
-                        location.reload(true);
-                    }
+                    });
+                    location.reload(true);
                 }
-                else
-                {
-                    alert("Cost needs to be a number");
-                }
-            });
+            }
+            else
+            {
+                alert("Cost needs to be a number");
+            }
+        });
 
     </repeat>
 </script>

@@ -267,6 +267,43 @@ function selectQuantity()
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
+}
 
+function selectQuantity2()
+{
+    global $dbh;
+    $sql = "SELECT title, id, quantity
+            FROM report_data WHERE quantity is not null GROUP BY title ORDER BY title";
+    $statement = $dbh->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
 
+function countNum($title)
+{
+    global $dbh;
+    $sql = "SELECT COUNT(title) FROM report_data WHERE title = :title";
+    $statement = $dbh->prepare($sql);
+    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $result = $result[0];
+    //$result = $result[0];
+    foreach($result as $num)
+    {
+        $newResult = $num;
+    }
+    return $newResult;
+}
+
+function selectCost()
+{
+    global $dbh;
+    $sql = "SELECT title, id, cosignor, cost
+            FROM report_data GROUP BY title ORDER BY title";
+    $statement = $dbh->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
 }

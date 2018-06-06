@@ -65,7 +65,6 @@ $f3 -> route('GET|POST /editReports', function($f3)
     //Be able to delete reports
     //Be able to edit costs of certain report items
     $data = selectCostNull();
-    print_r($data);
     $f3->set('data',$data);
 
     $data2 = selectQuantity();
@@ -93,6 +92,20 @@ $f3-> route('GET|POST /edit', function($f3) {
     {
         header("Location:inventory_management/ExcelMasters/");
     }
+
+    $data = selectQuantity2();
+    foreach($data as &$arr)
+    {
+        $quant = $arr['quantity'];
+        $numItems = countNum($arr['title']);
+        $newQuant = (float)$quant - (float)$numItems;
+        $arr['quantity'] = $newQuant;
+    }
+    $f3->set('data',$data);
+
+    $costData = selectCost();
+    $f3->set('costData',$costData);
+
     $template = new Template();
     echo $template->render('views/admin.html');
 });
