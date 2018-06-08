@@ -67,6 +67,9 @@ $f3 -> route('GET|POST /editReports', function($f3)
     $data = selectCostNull();
     $f3->set('data',$data);
 
+    $data2 = selectQuantity();
+    $f3->set('data2',$data2);
+
     $template = new Template();
     echo $template->render('views/editReports.html');
 });
@@ -82,6 +85,29 @@ $f3-> route('GET|POST /upload', function($f3) {
 $f3-> route('GET|POST /test', function($f3) {
     $template = new Template();
     echo $template->render('views/test.html');
+});
+
+$f3-> route('GET|POST /edit', function($f3) {
+    if(empty($_SESSION['username']))
+    {
+        header("Location:inventory_management/ExcelMasters/");
+    }
+
+    $data = selectQuantity2();
+    foreach($data as &$arr)
+    {
+        $quant = $arr['quantity'];
+        $numItems = countNum($arr['title']);
+        $newQuant = (float)$quant - (float)$numItems;
+        $arr['quantity'] = $newQuant;
+    }
+    $f3->set('data',$data);
+
+    $costData = selectCost();
+    $f3->set('costData',$costData);
+
+    $template = new Template();
+    echo $template->render('views/admin.html');
 });
 
 //Run Fat-Free Framework

@@ -15,13 +15,15 @@
 
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js" type="text/javascript" charset="utf8"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript" charset="utf8"></script>
-    <title>View/Edit Reports</title>
+    <title>To Do</title>
 </head>
 <body>
 <include href="views/css.html"></include>
 <nav class="navbar bg-light navbar-light">
-    <h2>Inventory Management</h2>
-    <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/reports"><h4>Reports</h4></a>
+    <!--<h2>Inventory Management</h2>-->
+    <img id="logo" src="images/TimelessLogo.png" width="400" height="125" title="Company Logo"/>
+    <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/reports"><h4>Home</h4></a>
+    <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/edit"><h4>Admin</h4></a>
     <a class="nav-item nav-link" href="/inventory_management/ExcelMasters/" id="logout">Logout</a>
 </nav>
     <div class="container">
@@ -66,7 +68,27 @@
 
             </tbody>
         </table>
-    </div>
+
+        </div>
+
+            <div class="row">
+            <table id="datatable3" class="table table-striped table-bordered display">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <repeat group="{{@data2}}" value="{{@row}}">
+                    <tr>
+                        <td>{{@row['title']}}</td>
+                        <td><input type="text" placeholder = "0" id="quant{{@row['id']}}"><button id="btnquant{{@row['id']}}">Update</button></td>
+                    </tr>
+                </repeat>
+                </tbody>
+            </table>
+            </div>
     </div>
 <script type="text/javascript">
     <repeat group="{{ @reports }}" value="{{ @report }}">
@@ -89,29 +111,57 @@
 
 <script>
     <repeat group="{{@data}}" value="{{@row}}">
-            $("#{{@row['id']}}").click(function()
-            {
-                var cost = $("#input{{@row['id']}}").val();
-                if (!isNaN(cost) && cost.toString().indexOf('.') != -1) {
-                    var title = "{{@row['title']}}";
-                    var cosignor = "{{@row['cosignor']}}";
-                    var update = confirm("Are you sure you wish to update this cost?");
-                    if (update) {
-                        $.post('{{@BASE}}/model/update.php', {
-                            title: title,
-                            cost: cost,
-                            cosignor: cosignor
-                        }, function (data) {
+        $("#{{@row['id']}}").click(function()
+        {
+            var cost = $("#input{{@row['id']}}").val();
+            if (!isNaN(cost) || cost.toString().indexOf('.') != -1) {
+                var title = "{{@row['title']}}";
+                var cosignor = "{{@row['cosignor']}}";
+                var update = confirm("Are you sure you wish to update this cost?");
+                if (update) {
+                    $.post('{{@BASE}}/model/update.php', {
+                        title: title,
+                        cost: cost,
+                        cosignor: cosignor
+                    }, function (data) {
 
-                        });
-                        location.reload(true);
-                    }
+                    });
+                    location.reload(true);
                 }
-                else
-                {
-                    alert("Cost needs to be a number");
+            }
+            else
+            {
+                alert("Cost needs to be a number");
+            }
+        });
+
+    </repeat>
+</script>
+
+<script>
+    <repeat group="{{@data2}}" value="{{@row}}">
+        $("#btnquant{{@row['id']}}").click(function()
+        {
+            var quantity = $("#quant{{@row['id']}}").val();
+            alert(quantity);
+            if (!isNaN(quantity) || quantity.toString().indexOf('.') != -1) {
+                var title = "{{@row['title']}}";
+                var update = confirm("Are you sure you wish to update this quantity?");
+                if (update) {
+                    $.post('{{@BASE}}/model/updateQuantity.php', {
+                        title: title,
+                        quantity: quantity
+                    }, function (data) {
+
+                    });
+                    location.reload(true);
                 }
-            });
+            }
+            else
+            {
+                alert("Quantity needs to be a number");
+            }
+        });
 
     </repeat>
 </script>
