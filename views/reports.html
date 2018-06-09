@@ -19,16 +19,31 @@
 
         <div class="row">
             <div class="col text-center">
+                <!--  Upload File Form  -->
                 <form action="#" method="post" enctype="multipart/form-data">
-                    <!--  Upload File Button  -->
                     <input class="btn btn-default" type="file" name="file" id="myFile">
                     <input class="button" type="submit" name="submit" value="Upload" id="submit">
                 </form>
+
+                <!--  Search  -->
                 <form action="#" method="post">
+                    <label for="title">Title
+                        <div><!--  this div puts label above the input  -->
+                            <input type="text" name="title" id="title">
+                        </div>
+                    </label>
                     <!--Datepicker-->
-                    <input type="date" value="{{@startDate}}" name="startDate" id="startDate">
-                    <input type="date" value="{{@endDate}}" name="endDate" id="endDate">
-                    <button type="submit" name="datesearch" id="dateButton">Search Date</button>
+                    <label for="startDate">Start Date
+                        <div>
+                            <input type="date" value="{{@startDate}}" name="startDate" id="startDate">
+                        </div>
+                    </label>
+                    <label for="endDate">End Date
+                        <div>
+                            <input type="date" value="{{@endDate}}" name="endDate" id="endDate">
+                        </div>
+                    </label>
+                    <button type="submit" name="datesearch" id="dateButton">Search</button>
                 </form>
                 <hr>
             </div>
