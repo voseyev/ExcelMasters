@@ -155,7 +155,11 @@ function selectData($title, $start, $end)
     global $dbh;
 
     $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost, profit, percent_margin 
-            FROM report_data WHERE end_date >= :startdate AND end_date <= :enddate AND title LIKE :title ORDER BY end_date";
+            FROM report_data 
+            WHERE end_date >= :startdate 
+            AND end_date <= :enddate 
+            AND title LIKE :title 
+            ORDER BY end_date";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':startdate',$start,PDO::PARAM_INT);
     $statement->bindParam(':enddate',$end,PDO::PARAM_INT);
