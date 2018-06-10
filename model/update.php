@@ -14,7 +14,10 @@ if (isset($_POST['cost'])) {
     $profit = $cosignor - $cost;
     updateCost($title,$cost);
     updateProfit($title,$profit);
-    $percentMargin = (($cosignor - $cost) / $cosignor) * 100;
-    addPercentMargin($title, $percentMargin, $cosignor);
+    $result = selectTitleInfo($title);
+    foreach ($result as $row => $item) {
+        $percentMargin = (($item['cosignor'] - $item['cost']) / $item['cosignor']) * 100;
+        addPercentMargin($title, $percentMargin, $cosignor);
+    }
 
 }

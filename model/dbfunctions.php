@@ -227,6 +227,23 @@ function updateProfit($title,$profit)
     return $result;
 }
 
+// Pull Data for selected title
+
+function selectTitleInfo($title) {
+
+    global $dbh;
+    $sql = "SELECT * FROM report_data WHERE title = $title";
+    $statement = $dbh->prepare($sql);
+
+    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
+
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+// Update table with percent margin
+
 function addPercentMargin($title,$percentMargin) {
 
     global $dbh;
