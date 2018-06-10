@@ -31,13 +31,19 @@ if(isset($_POST['submit']))
 
 
 /* Setting date range for select data*/
-if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
+if(isset($_POST['startDate']) && isset($_POST['endDate']) && isset($_POST['title'])) {
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
+    $title = $_POST['title'];
+    $title = '%'.$title.'%';  //% used for sql wildcard
+} else if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $title = '%%';
 } else {  //if search not sent use default date
     //$currentDate = strftime('%F');
     //TODO change back to dynamic current date
-    $endDate = '2018-03-10';
+    $endDate = '2018-03-30';
     $startDate = explode('-', $endDate);
     $year = $startDate[0];
     $month = $startDate[1];
@@ -45,7 +51,7 @@ if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
     $startDate = $year . "-" . $month . "-" . $day;
 }
 //get item data
-$result = selectData($startDate, $endDate);
+$result = selectData($title, $startDate, $endDate);
 //get file data to display from database
 $reports = getReports();
 $f3->set('reports',$reports);
