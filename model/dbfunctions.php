@@ -150,15 +150,20 @@ function sendData($id,$title,$date,$win,$pristine,$cosignor, $reportId)
  * @param $end date of data
  * @return array of data within the start and end date
  */
-function selectData($start, $end)
+function selectData($title, $start, $end)
 {
     global $dbh;
 
     $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost, profit, percent_margin 
-            FROM report_data WHERE end_date >= :startdate and end_date <= :enddate ORDER BY end_date";
+            FROM report_data 
+            WHERE end_date >= :startdate 
+            AND end_date <= :enddate 
+            AND title LIKE :title 
+            ORDER BY end_date";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':startdate',$start,PDO::PARAM_INT);
     $statement->bindParam(':enddate',$end,PDO::PARAM_INT);
+    $statement->bindParam(':title',$title,PDO::PARAM_INT);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;

@@ -31,21 +31,28 @@ if(isset($_POST['submit']))
 
 
 /* Setting date range for select data*/
-if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
+if(isset($_POST['startDate']) && isset($_POST['endDate']) && isset($_POST['title'])) {
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
+    $title = $_POST['title'];
+    $title = '%'.$title.'%';  //% used for sql wildcard
+} else if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $title = '%%';
 } else {  //if search not sent use default date
     //$currentDate = strftime('%F');
     //TODO change back to dynamic current date
-    $endDate = '2018-03-10';
+    $endDate = '2018-03-30';
     $startDate = explode('-', $endDate);
     $year = $startDate[0];
     $month = $startDate[1];
     $day = '01';
     $startDate = $year . "-" . $month . "-" . $day;
+    $title = '%%';
 }
 //get item data
-$result = selectData($startDate, $endDate);
+$result = selectData($title, $startDate, $endDate);
 //get file data to display from database
 $reports = getReports();
 $f3->set('reports',$reports);
@@ -90,6 +97,37 @@ if ($numCost != 0) {
     $avgMargin = 0;
 }
 
+//  Timeline Builder
+$timeline = array();
+foreach ($result as $row => $item) {
+    //returned columns:
+    //item_num, title, end_date, win, pristine, cosignor, cost
+    //print_r($item);
+    $numRows++;
+    //date format (2008, 3, 4)
+
+    $parts = explode('-', $item['end_date']);
+    $date = $parts[0].', '.$parts[1].', '.$parts[2];
+
+    if ($timeline[$date] == null) {  //sets default for new date
+        //echo 'null:'.$date.' '.$item['profit'].'||| ';
+        $timeline[$date][] = array($item['profit'], 1);
+    } else {  //recalculates average for existing dates
+        //echo 'not null:'.$date. '= ';
+        $avgOld = $timeline[$date][0][0];
+        $count = $timeline[$date][0][1];
+        $count++;
+        //$avgNew = ($avgOld + (($item['profit'] - $avgOld) / $count));
+        //echo ($avgOld + (($item['profit'] - $avgOld) / $count));
+        $avgNew = ($avgOld + (($item['profit'] - $avgOld) / $count));
+        //echo 'avgold'.$avgOld.'count:'.$count.'avgNew:'.$avgNew.'profit:'.$item['profit'].' ## ';
+
+        $timeline[$date][] = array($avgNew, $count);  //TODO timeline building correctly, need to print into chart
+        //echo'||| ';
+    }
+}//end timeline builder
+
+$f3->set('timeline', $timeline);
 $f3->set('startDate', $startDate);
 $f3->set('endDate', $endDate);
 $f3->set('totalItems', $numRows);
