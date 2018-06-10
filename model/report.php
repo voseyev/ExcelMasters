@@ -125,11 +125,9 @@ foreach ($result as $row => $item) {
         $timeline[$date][] = array($avgNew, $count);  //TODO timeline building correctly, need to print into chart
         //echo'||| ';
     }
+}//end timeline builder
 
-
-}
-
-
+$f3->set('timeline', $timeline);
 $f3->set('startDate', $startDate);
 $f3->set('endDate', $endDate);
 $f3->set('totalItems', $numRows);

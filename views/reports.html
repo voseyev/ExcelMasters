@@ -4,6 +4,17 @@
 </head>
 
     <body>
+    <div id="chart_div_time" style='width: 1400px; height: 700px;'></div>
+    <!--TODO remove
+    <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
+        <repeat group="{{@date}}" value="{{@cols}}">
+            ,[new Date({{@key}}), {{@cols[0]}}]
+        </repeat>
+    </repeat>
+-->
+
+
+
     <!-- this include prints out the contents of css.html -->
     <nav class="navbar bg-light navbar-light">
         <!--<h2>Inventory Management</h2>-->
@@ -209,18 +220,20 @@
     <script src="js/reports.js"></script>
     <script src="js/chartinator.js"></script>
 
+    <!--  Draw Charts  -->
+    <!--  Column Chart -->
     <script type="text/javascript">
         google.charts.load("current", {packages: ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
 
-        // create ethnicity pie chart
+        // create Column Chartt
         function drawChart() {
             // send to data table
             //repeat statement causes errors in phpStorm but is correct as is
             var data = google.visualization.arrayToDataTable([
                 ['Title', 'Win']
                 <repeat group="{{@data}}" value="{{@row}}">
-                ,['{{ @row["title"] }}', {{ @row['win'] }}]
+                    ,['{{ @row["title"] }}', {{ @row['win'] }}]
                 </repeat>
             ]);
             // customize chart
@@ -233,6 +246,42 @@
             chart.draw(data, options);
         }
     </script>
+    <!--  Timeline Chart -->
+    <script type='text/javascript'>
+        google.charts.load('current', {packages:['annotatedtimeline']});
+        google.charts.setOnLoadCallback(drawChart2);
+        function drawChart2() {
+            var data = new google.visualization.arrayToDataTable([
+                    ['Date', 'Average Profit']
+                    <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
+                        <repeat group="{{@date}}" value="{{@cols}}">
+                            ,[new Date({{@key}}), {{@cols[0]}}]
+                        </repeat>
+                    </repeat>
+            ]);
 
+            var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div_time'));
+            chart.draw(data, {displayAnnotations: true});
+        }
+    </script>
+<!--
+data.addColumn('date', 'Date');
+            data.addColumn('number', 'Average Profit');
+            //####  timeline:{{@key}} date:{{@date[0]}} col0:{{@cols[0]}} col1:{{@cols[1]}}  ####
+            data.addRows([
+                /*[new Date(2018, 03, 05), 5.11] ,[new Date(2018, 03, 07), 5.11] ,[new Date(2018, 03, 08), 11.40]*/
+                <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
+                    <repeat group="{{@date}}" value="{{@cols}}">
+                        ,[new Date({{@key}}), {{@cols[0]}}]
+                    </repeat>
+                </repeat>
+
+            ]);
+
+
+-->
+
+
+<br><br><br><br><hr>
     </body>
     </html>
