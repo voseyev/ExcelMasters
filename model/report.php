@@ -127,7 +127,9 @@ foreach ($result as $row => $item) {
     }
 }//end timeline builder
 
+$title = str_replace("%","",$title);  //removed ampersands for displaying
 $f3->set('timeline', $timeline);
+$f3->set('title', $title);
 $f3->set('startDate', $startDate);
 $f3->set('endDate', $endDate);
 $f3->set('totalItems', $numRows);

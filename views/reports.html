@@ -40,7 +40,7 @@
                 <form action="#" method="post">
                     <label for="title">Title
                         <div><!--  this div puts label above the input  -->
-                            <input type="text" name="title" id="title">
+                            <input type="text" value="{{@title}}" name="title" id="title">
                         </div>
                     </label>
                     <!--Datepicker-->
@@ -260,8 +260,17 @@
                     </repeat>
             ]);
 
+            // customize chart
+            var options = {  //TODO change chart style
+                displayAnnotations: true,
+                title: 'Timeline',
+                fill: 50,
+                thickness: 3,
+
+            };
+            //draw chart
             var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div_time'));
-            chart.draw(data, {displayAnnotations: true});
+            chart.draw(data, options);
         }
     </script>
 <!--
