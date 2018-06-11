@@ -5,15 +5,6 @@
 
     <body>
     <div id="chart_div_time" style='width: 1400px; height: 700px;'></div>
-    <!--TODO remove
-    <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
-        <repeat group="{{@date}}" value="{{@cols}}">
-            ,[new Date({{@key}}), {{@cols[0]}}]
-        </repeat>
-    </repeat>
--->
-
-
 
     <!-- this include prints out the contents of css.html -->
     <nav class="navbar bg-light navbar-light">
@@ -62,18 +53,7 @@
 
 
         <!--  Report Summary  -->
-        <!--<div class="row">-->
-            <!--<div class="col text-center">-->
-                <!--<h4>Total Items: {{@totalItems}}</h4>-->
-                <!--<h5>Items without cost data: {{@totalNoCost}}</h5>-->
-                <!--&lt;!&ndash;  <h5>{{@startDate}} / {{@endDate}}</h5>  //not needed since date picker sticky &ndash;&gt;-->
-            <!--</div>-->
-        <!--</div>-->
-
-
         <div class="row justify-content-md-center">
-
-
             <div class="col-6">
                 <!--  Table Summary  -->
                 <table id="table" class="table table-hover">
@@ -265,31 +245,13 @@
                 displayAnnotations: true,
                 title: 'Timeline',
                 fill: 50,
-                thickness: 3,
-
+                thickness: 3
             };
             //draw chart
             var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div_time'));
             chart.draw(data, options);
         }
     </script>
-<!--
-data.addColumn('date', 'Date');
-            data.addColumn('number', 'Average Profit');
-            //####  timeline:{{@key}} date:{{@date[0]}} col0:{{@cols[0]}} col1:{{@cols[1]}}  ####
-            data.addRows([
-                /*[new Date(2018, 03, 05), 5.11] ,[new Date(2018, 03, 07), 5.11] ,[new Date(2018, 03, 08), 11.40]*/
-                <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
-                    <repeat group="{{@date}}" value="{{@cols}}">
-                        ,[new Date({{@key}}), {{@cols[0]}}]
-                    </repeat>
-                </repeat>
-
-            ]);
-
-
--->
-
 
 <br><br><br><br><hr>
     </body>
