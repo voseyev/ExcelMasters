@@ -10,14 +10,12 @@ $dbh = connect();
 if (isset($_POST['cost'])) {
     $cost = $_POST['cost'];
     $title = $_POST['title'];
-    $cosignor = $_POST['cosignor'];
-    $profit = $cosignor - $cost;
-    updateCost($title,$cost);
-    updateProfit($title,$profit);
     $result = selectTitleInfo($title);
     foreach ($result as $row => $item) {
-        $percentMargin = (($item['cosignor'] - $item['cost']) / $item['cosignor']) * 100;
-        addPercentMargin($title, $percentMargin, $cosignor);
+        $cosignor = $item['cosignor'];
+        $cost = $item['cost'];
+        $profit = $cosignor - $cost;
+        $percentMargin = ($profit / $cosignor) * 100;
+        updateCost($title,$cost, $profit, $percentMargin);
     }
-
 }
