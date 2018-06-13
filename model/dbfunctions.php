@@ -200,18 +200,18 @@ function deleteReportData($id)
     $statement->execute();
 }
 
-function updateCost($title, $cost, $profit, $percentMargin)
+function updateCost($cost, $profit, $percentMargin, $id)
 {
     global $dbh;
     $sql = "UPDATE report_data
             SET cost = :cost, profit = :profit, percent_margin = :percent_margin
-            WHERE title = :title";
+            WHERE id = :id";
     $statement = $dbh->prepare($sql);
 
     $statement->bindValue(':cost',$cost,PDO::PARAM_INT);
-    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
     $statement->bindValue(':percent_margin',$percentMargin,PDO::PARAM_INT);
     $statement->bindValue(':profit',$profit,PDO::PARAM_INT);
+    $statement->bindValue(':id',$id,PDO::PARAM_INT);
 
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
