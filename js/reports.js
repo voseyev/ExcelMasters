@@ -3,6 +3,7 @@ $(document).ready(function () {
     //number is column to action on
     $('#datatable').DataTable({
         fixedHeader: true,
+        pageLength: 50,
         order: [[ 2, "desc" ]],
         rowGroup: {
             dataSrc: 2
