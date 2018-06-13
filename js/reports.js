@@ -1,5 +1,14 @@
 $(document).ready(function () {
-    $('#datatable').DataTable();
+    //comments inside break it
+    //number is column to action on
+    $('#datatable').DataTable({
+        fixedHeader: true,
+        order: [[ 2, "desc" ]],
+        rowGroup: {
+            dataSrc: 2
+        }
+
+    });
 });
 
 

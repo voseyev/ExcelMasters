@@ -13,9 +13,8 @@ if (isset($_POST['cost'])) {
     $result = selectTitleInfo($title);
     foreach ($result as $row => $item) {
         $cosignor = $item['cosignor'];
-        $cost = $item['cost'];
         $profit = $cosignor - $cost;
-        $percentMargin = ($profit / $cosignor) * 100;
-        updateCost($title,$cost, $profit, $percentMargin);
+        $percentMargin = (($profit / $cosignor) * 100);
+        updateCost($title, $cost, $profit, $percentMargin);
     }
 }

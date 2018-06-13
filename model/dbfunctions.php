@@ -200,7 +200,7 @@ function deleteReportData($id)
     $statement->execute();
 }
 
-function updateCost($title,$cost, $profit, $percentMargin)
+function updateCost($title, $cost, $profit, $percentMargin)
 {
     global $dbh;
     $sql = "UPDATE report_data
@@ -222,7 +222,7 @@ function updateCost($title,$cost, $profit, $percentMargin)
 function selectTitleInfo($title)
 {
     global $dbh;
-    $sql = "SELECT * FROM report_data WHERE title = $title";
+    $sql = "SELECT * FROM report_data WHERE title = :title";
     $statement = $dbh->prepare($sql);
 
     $statement->bindvalue(':title',$title,PDO::PARAM_STR);

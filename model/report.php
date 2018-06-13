@@ -41,12 +41,12 @@ if(isset($_POST['startDate']) && isset($_POST['endDate']) && isset($_POST['title
     $endDate = $_POST['endDate'];
     $title = '%%';
 } else {  //if search not sent use default date
-    //$currentDate = strftime('%F');
-    //TODO change back to dynamic current date
-    $endDate = '2018-03-30';
+    $endDate = strftime('%F');
+    //$endDate = '2018-03-30';
     $startDate = explode('-', $endDate);
     $year = $startDate[0];
-    $month = $startDate[1];
+    //$month = $startDate[1];
+    $month = '01';
     $day = '01';
     $startDate = $year . "-" . $month . "-" . $day;
     $title = '%%';
@@ -65,10 +65,9 @@ $totalWin = 0;
 $totalCons = 0;
 $totalCost = 0;
 $totalMargin = 0;
+$totalPercent = 0;
 foreach ($result as $row => $item) {
-    //returned columns:
-    //item_num, title, end_date, win, pristine, cosignor, cost
-    //print_r($item);
+    //returned columns:  item_num, title, end_date, win, pristine, cosignor, cost
     $numRows++;
     $totalWin += $item['win'];
     $totalCons += $item['cosignor'];
@@ -77,6 +76,7 @@ foreach ($result as $row => $item) {
         $numCost++;
     }
     if ($item['profit'] != null) $totalMargin += $item['profit'];
+    if ($item['percent_margin'] != null) $totalPercent += $item['percent_margin'];
 }
 
 //checking which values are set to prevent dividing by 0
@@ -85,47 +85,45 @@ if ($numCost != 0) {
     $avgCons = $totalCons / $numRows;
     $avgCost = $totalCost / $numCost;
     $avgMargin = $totalMargin / $numCost;
+    $avgPercent = $totalPercent / $numCost;
 } else if ($numRows != 0) {
     $avgWin = $totalWin / $numRows;
     $avgCons = $totalCons / $numRows;
     $avgCost = 0;
     $avgMargin = 0;
+    $avgPercent = 0;
 } else {
     $avgWin = 0;
     $avgCons = 0;
     $avgCost = 0;
     $avgMargin = 0;
+    $avgPercent = 0;
 }
 
 //  Timeline Builder
 $timeline = array();
 foreach ($result as $row => $item) {
-    //returned columns:
-    //item_num, title, end_date, win, pristine, cosignor, cost
-    //print_r($item);
-    $numRows++;
+    //returned columns:  item_num, title, end_date, win, pristine, cosignor, cost
     //date format (2008, 3, 4)
-
+    $date = str_replace("-", ", ", $item['end_date']);
     $parts = explode('-', $item['end_date']);
+    $parts[1] = (double)$parts[1] - 1;  //offsets month to accommodate for date object
     $date = $parts[0].', '.$parts[1].', '.$parts[2];
+    $profit = $item['profit'];
 
     if ($timeline[$date] == null) {  //sets default for new date
-        //echo 'null:'.$date.' '.$item['profit'].'||| ';
-        $timeline[$date][] = array($item['profit'], 1);
+        $timeline[$date][] = array($profit, 1);
     } else {  //recalculates average for existing dates
-        //echo 'not null:'.$date. '= ';
         $avgOld = $timeline[$date][0][0];
         $count = $timeline[$date][0][1];
         $count++;
-        //$avgNew = ($avgOld + (($item['profit'] - $avgOld) / $count));
-        //echo ($avgOld + (($item['profit'] - $avgOld) / $count));
-        $avgNew = ($avgOld + (($item['profit'] - $avgOld) / $count));
-        //echo 'avgold'.$avgOld.'count:'.$count.'avgNew:'.$avgNew.'profit:'.$item['profit'].' ## ';
-
-        $timeline[$date][] = array($avgNew, $count);  //TODO timeline building correctly, need to print into chart
-        //echo'||| ';
+        $avgNew = ($avgOld + (($profit - $avgOld) / $count));
+        $timeline[$date][0][0] = $avgNew;
+        $timeline[$date][0][1] = $count;
     }
 }//end timeline builder
+
+//echo '<pre>';  print_r($timeline);  echo '</pre>';
 
 $title = str_replace("%","",$title);  //removed ampersands for displaying
 $f3->set('timeline', $timeline);
@@ -138,10 +136,12 @@ $f3->set('totalWin', number_format($totalWin, 2));
 $f3->set('totalCons', number_format($totalCons, 2));
 $f3->set('totalCost', number_format($totalCost, 2));
 $f3->set('totalMargin', number_format($totalMargin, 2));
+$f3->set('totalPercent', number_format($totalPercent, 2));
 $f3->set('avgWin', number_format($avgWin, 2));
 $f3->set('avgCons', number_format($avgCons, 2));
 $f3->set('avgCost', number_format($avgCost, 2));
 $f3->set('avgMargin', number_format($avgMargin, 2));
+$f3->set('avgPercent', number_format($avgPercent, 2));
 
 $template = new Template();
 echo $template->render('views/reports.html');
