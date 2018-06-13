@@ -1,5 +1,26 @@
 $(document).ready(function () {
-    $('#datatable').DataTable();
+    //comments inside break it
+    //number is column to action on
+    $('#datatable').DataTable({
+        columns: [
+            {'type': 'num'},
+            {'type': 'string'},
+            {'type': 'string'},
+            {'type': 'num'},
+            {'type': 'num'},
+            {'type': 'num'},
+            {'type': 'num'},
+            {'type': 'num'},
+            {'type': 'num'},
+        ],
+        fixedHeader: true,
+        pageLength: 50,
+        order: [[ 2, "desc" ]],
+        rowGroup: {
+            dataSrc: 2
+        }
+
+    });
 });
 
 

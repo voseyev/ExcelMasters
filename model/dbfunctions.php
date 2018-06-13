@@ -200,32 +200,18 @@ function deleteReportData($id)
     $statement->execute();
 }
 
-function updateCost($title,$cost)
+function updateCost($cost, $profit, $percentMargin, $id)
 {
-
     global $dbh;
     $sql = "UPDATE report_data
-            SET cost = :cost WHERE title = :title";
+            SET cost = :cost, profit = :profit, percent_margin = :percent_margin
+            WHERE id = :id";
     $statement = $dbh->prepare($sql);
 
     $statement->bindValue(':cost',$cost,PDO::PARAM_INT);
-    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
-
-    $statement->execute();
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    return $result;
-}
-
-function updateProfit($title,$profit)
-{
-
-    global $dbh;
-    $sql = "UPDATE report_data
-            SET profit = :profit WHERE title = :title";
-    $statement = $dbh->prepare($sql);
-
+    $statement->bindValue(':percent_margin',$percentMargin,PDO::PARAM_INT);
     $statement->bindValue(':profit',$profit,PDO::PARAM_INT);
-    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
+    $statement->bindValue(':id',$id,PDO::PARAM_INT);
 
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -233,11 +219,10 @@ function updateProfit($title,$profit)
 }
 
 // Pull Data for selected title
-
-function selectTitleInfo($title) {
-
+function selectTitleInfo($title)
+{
     global $dbh;
-    $sql = "SELECT * FROM report_data WHERE title = $title";
+    $sql = "SELECT * FROM report_data WHERE title = :title";
     $statement = $dbh->prepare($sql);
 
     $statement->bindvalue(':title',$title,PDO::PARAM_STR);
@@ -247,22 +232,6 @@ function selectTitleInfo($title) {
     return $result;
 }
 
-// Update table with percent margin
-
-function addPercentMargin($title,$percentMargin) {
-
-    global $dbh;
-    $sql = "UPDATE report_data
-            SET percent_margin = :percent_margin WHERE title = :title";
-    $statement = $dbh->prepare($sql);
-
-    $statement->bindValue(':percent_margin',$percentMargin,PDO::PARAM_INT);
-    $statement->bindvalue(':title',$title,PDO::PARAM_STR);
-
-    $statement->execute();
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    return $result;
-}
 
 function updateQuantity($title,$quantity)
 {

@@ -3,18 +3,7 @@
     <include href="views/css.html"></include>
 </head>
 
-    <body>
-    <div id="chart_div_time" style='width: 1400px; height: 700px;'></div>
-    <!--TODO remove
-    <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
-        <repeat group="{{@date}}" value="{{@cols}}">
-            ,[new Date({{@key}}), {{@cols[0]}}]
-        </repeat>
-    </repeat>
--->
-
-
-
+<body>
     <!-- this include prints out the contents of css.html -->
     <nav class="navbar bg-light navbar-light">
         <!--<h2>Inventory Management</h2>-->
@@ -25,8 +14,7 @@
     </nav>
 
     <!-- MAIN CONTAINER  -->
-    <div class="container-fluid" id="maindiv"><!-- TODO change to "container-fluid"  -->
-
+    <div class="container-fluid" id="maindiv">
 
         <div class="row">
             <div class="col text-center">
@@ -36,11 +24,13 @@
                     <input class="button" type="submit" name="submit" value="Upload" id="submit">
                 </form>
 
+                <hr>
+
                 <!--  Search  -->
                 <form action="#" method="post">
                     <label for="title">Title
                         <div><!--  this div puts label above the input  -->
-                            <input type="text" name="title" id="title">
+                            <input type="text" value="{{@title}}" name="title" id="title">
                         </div>
                     </label>
                     <!--Datepicker-->
@@ -62,140 +52,114 @@
 
 
         <!--  Report Summary  -->
-        <!--<div class="row">-->
-            <!--<div class="col text-center">-->
-                <!--<h4>Total Items: {{@totalItems}}</h4>-->
-                <!--<h5>Items without cost data: {{@totalNoCost}}</h5>-->
-                <!--&lt;!&ndash;  <h5>{{@startDate}} / {{@endDate}}</h5>  //not needed since date picker sticky &ndash;&gt;-->
-            <!--</div>-->
-        <!--</div>-->
-
-
-        <div class="row justify-content-md-center">
-
-
+        <div class="row justify-content-md-center border bg-light">
             <div class="col-6">
                 <!--  Table Summary  -->
                 <table id="table" class="table table-hover">
                     <br>
-
                     <!--  Report Summary  -->
-                    <div class="col text-center">
+                    <div class="text-center">
                         <h4>Total Items: {{@totalItems}} /  Items without cost data: {{@totalNoCost}}</h4>
                     </div>
 
                     <br>
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-right">Winning Bid</th>
-                        <th class="text-right">Consignor Cut</th>
-                        <th class="text-right">Item Cost</th>
-                        <th class="text-right">Profit Margin</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th class="text-right">Winning Bid</th>
+                            <th class="text-right">Consignor Cut</th>
+                            <th class="text-right">Item Cost</th>
+                            <th class="text-right">Profit Margin</th>
+                            <th class="text-right">Percent Margin</th>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    <!-- average  -->
-                    <tr>
-                        <td>Average</td>
-                        <td class="text-right">{{ @avgWin }}</td>
-                        <td class="text-right">{{ @avgCons }}</td>
-                        <td class="text-right">{{ @avgCost }}</td>
-                        <td class="text-right">{{ @avgMargin }}</td>
-                    </tr>
-                    <!-- total  -->
-                    <tr>
-                        <td>Total</td>
-                        <td class="text-right">{{ @totalWin }}</td>
-                        <td class="text-right">{{ @totalCons }}</td>
-                        <td class="text-right">{{ @totalCost }}</td>
-                        <td class="text-right">{{ @totalMargin }}</td>
-                    </tr>
+                        <tr><!-- average  -->
+                            <td>Average</td>
+                            <td class="text-right">${{ @avgWin }}</td>
+                            <td class="text-right">${{ @avgCons }}</td>
+                            <td class="text-right">${{ @avgCost }}</td>
+                            <td class="text-right">${{ @avgMargin }}</td>
+                            <td class="text-right">{{ @avgPercent }}%</td>
+                        </tr>
+                        <tr><!-- total  -->
+                            <td>Total</td>
+                            <td class="text-right">${{ @totalWin }}</td>
+                            <td class="text-right">${{ @totalCons }}</td>
+                            <td class="text-right">${{ @totalCost }}</td>
+                            <td class="text-right">${{ @totalMargin }}</td>
+                            <td class="text-right">{{ @totalPercent }}%</td>
+                        </tr>
                     </tbody>
                 </table>
-                <div class="col text-right">
-                <form action="editReports" method="post">
-                    <!--Edit Reports / Button-->
-                    <input id="button" type="submit" name="submit" value="Edit Reports">
-                </form>
+            </div>
+        </div><!--  end Summary  -->
+
+        <!--  Timeline  -->
+        <div class="row border">
+            <div class="col-12 text-center">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <br>
+                        <h3>Average Profit Per Day</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div id="chart_div_time" style='width: 1200px; height: 400px;'></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div><!--  end Timeline  -->
 
-        <style>
-            .hidden{
-                display:none;
-            }
-
-            .unhidden{
-                display:block;
-            }
-        </style>
-        <script type="text/javascript">
-            function unhide(clickedButton, formId) {
-                var item = document.getElementById(formId);
-                if (item) {
-                    if(item.className=='hidden'){
-                        item.className = 'unhidden' ;
-                        clickedButton.value = 'Hide Graph'
-                    }else{
-                        item.className = 'hidden';
-                        clickedButton.value = 'Show Graph'
-                    }
-                }}
-
-        </script>
-
-
-        <input type="button" onclick="unhide(this, 'Chart') " value="Hide Graph">
-        <!--  Chart  -->
-        <div id="Chart"  class="row" >
-            <div class="col-12">
-                <hr>
+        <!--  Graph Percent Margin  -->
+        <div id="Chart"  class="row border">
+            <div class="col-12 text-center border">
+                <br>
+                <h3>Percent Margin</h3>
                 <div id="chart_div" style="min-height: 450px;"></div>
             </div>
-        </div><!--  end Table Summary  -->
-        <!-- end Report Summary -->
+        </div><!--  end Graph  -->
 
         <!--  Data table  -->
-        <div class="row">
-            <div class="col">
-                <hr>
-            <table id="datatable" class="table barChart compact table-bordered display">
-                <thead>
-                <tr>
-                    <th data-type="string">Item Number</th>
-                    <th data-type="string">Title</th>
-                    <th data-type="date">End Date</th>
-                    <th data-type="number">Winning Bid</th>
-                    <th data-type="number">Pristine Share</th>
-                    <th data-type="number">Consignor</th>
-                    <th data-type="number">Cost</th>
-                    <th data-type="number">Profit Margin</th>
-                    <th data-type="number">Percent Margin</th>
-                </tr>
+        <div class="row border bg-light">
+            <div class="col text-center">
+                <br>
+                <h3>Details</h3>
+                <table id="datatable" class="table barChart compact table-bordered display">
+                    <thead>
+                        <tr>
+                            <th data-type="string">Item Number</th>
+                            <th data-type="string">Title</th>
+                            <th data-type="date">End Date</th>
+                            <th data-type="number">Winning Bid</th>
+                            <th data-type="number">Pristine Share</th>
+                            <th data-type="number">Consignor</th>
+                            <th data-type="number">Cost</th>
+                            <th data-type="number">Profit Margin</th>
+                            <th data-type="number">Percent Margin</th>
+                        </tr>
+                    </thead>
 
-                </thead>
-                <tbody>
-                <repeat group="{{@data}}" value="{{@row}}">
-                    <tr>
-                        <td>{{@row['item_num']}}</td>
-                        <td>{{@row['title']}}</td>
-                        <td class="text-nowrap">{{@row['end_date']}}</td>
-                        <td>{{@row['win']}}</td>
-                        <td>{{@row['pristine']}}</td>
-                        <td>{{@row['cosignor']}}</td>
-                        <td>{{@row['cost']}}</td>
-                        <td>{{@row['profit']}}</td>
-                        <td>{{@row['percent_margin']}}</td>
-                    </tr>
-                </repeat>
-
-                </tbody>
-            </table>
+                    <tbody>
+                        <repeat group="{{@data}}" value="{{@row}}">
+                            <tr>
+                                <td>{{@row['item_num']}}</td>
+                                <td>{{@row['title']}}</td>
+                                <td class="text-nowrap">{{@row['end_date']}}</td>
+                                <td>{{@row['win']}}</td>
+                                <td>{{@row['pristine']}}</td>
+                                <td>{{@row['cosignor']}}</td>
+                                <td>{{@row['cost']}}</td>
+                                <td>{{@row['profit']}}</td>
+                                <td>{{@row['percent_margin']}}</td>
+                            </tr>
+                        </repeat>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </div><!--  end Data Table  -->
     </div><!-- end MAIN CONTAINER  ->
 
 
@@ -209,6 +173,10 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" type="text/javascript"
             charset="utf8"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript"
+            charset="utf8"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.3/js/dataTables.fixedHeader.min.js" type="text/javascript"
+            charset="utf8"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.0.2/js/dataTables.rowGroup.min.js" type="text/javascript"
             charset="utf8"></script>
     <!--  Bootstrap  -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
@@ -226,19 +194,19 @@
         google.charts.load("current", {packages: ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
 
-        // create Column Chartt
+        // create Column Chart
         function drawChart() {
             // send to data table
             //repeat statement causes errors in phpStorm but is correct as is
             var data = google.visualization.arrayToDataTable([
-                ['Title', 'Win']
+                ['Title', 'Percent Margin']
                 <repeat group="{{@data}}" value="{{@row}}">
-                    ,['{{ @row["title"] }}', {{ @row['win'] }}]
+                    ,['{{ @row["title"] }}', {{ @row['percent_margin'] }}]
                 </repeat>
             ]);
             // customize chart
             var options = {  //TODO change chart style
-                title: 'Summary',
+                title: 'Percent Margin Summary',
                 is3D: true
             };
             // draw chart at id
@@ -260,28 +228,19 @@
                     </repeat>
             ]);
 
+            // customize chart
+            var options = {  //TODO change chart style
+                displayAnnotations: true,
+                title: 'Timeline',
+                fill: 50,
+                thickness: 3
+            };
+            //draw chart
             var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div_time'));
-            chart.draw(data, {displayAnnotations: true});
+            chart.draw(data, options);
         }
     </script>
-<!--
-data.addColumn('date', 'Date');
-            data.addColumn('number', 'Average Profit');
-            //####  timeline:{{@key}} date:{{@date[0]}} col0:{{@cols[0]}} col1:{{@cols[1]}}  ####
-            data.addRows([
-                /*[new Date(2018, 03, 05), 5.11] ,[new Date(2018, 03, 07), 5.11] ,[new Date(2018, 03, 08), 11.40]*/
-                <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
-                    <repeat group="{{@date}}" value="{{@cols}}">
-                        ,[new Date({{@key}}), {{@cols[0]}}]
-                    </repeat>
-                </repeat>
-
-            ]);
-
-
--->
-
 
 <br><br><br><br><hr>
-    </body>
-    </html>
+</body>
+</html>
