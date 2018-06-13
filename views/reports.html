@@ -108,48 +108,64 @@
         <!--  Graph Percent Margin  -->
         <div id="Chart"  class="row border">
             <div class="col-12 text-center border">
-                <br>
-                <h3>Percent Margin</h3>
-                <div id="chart_div" style="min-height: 450px;"></div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <br>
+                        <h3>Percent Margin</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div id="chart_div" style="min-height: 450px;"></div>
+                    </div>
+                </div>
             </div>
         </div><!--  end Graph  -->
 
         <!--  Data table  -->
         <div class="row border bg-light">
             <div class="col text-center">
-                <br>
-                <h3>Details</h3>
-                <table id="datatable" class="table barChart compact table-bordered display">
-                    <thead>
-                        <tr>
-                            <th data-type="string">Item Number</th>
-                            <th data-type="string">Title</th>
-                            <th data-type="date">End Date</th>
-                            <th data-type="number">Winning Bid</th>
-                            <th data-type="number">Pristine Share</th>
-                            <th data-type="number">Consignor</th>
-                            <th data-type="number">Cost</th>
-                            <th data-type="number">Profit Margin</th>
-                            <th data-type="number">Percent Margin</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <repeat group="{{@data}}" value="{{@row}}">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <br>
+                        <h3>Details</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <table id="datatable" class="table barChart compact table-bordered display">
+                            <thead>
                             <tr>
-                                <td>{{@row['item_num']}}</td>
-                                <td>{{@row['title']}}</td>
-                                <td class="text-nowrap">{{@row['end_date']}}</td>
-                                <td>{{@row['win']}}</td>
-                                <td>{{@row['pristine']}}</td>
-                                <td>{{@row['cosignor']}}</td>
-                                <td>{{@row['cost']}}</td>
-                                <td>{{@row['profit']}}</td>
-                                <td>{{@row['percent_margin']}}</td>
+                                <th data-type="string">Item Number</th>
+                                <th data-type="string">Title</th>
+                                <th data-type="date">End Date</th>
+                                <th data-type="number">Winning Bid</th>
+                                <th data-type="number">Pristine Share</th>
+                                <th data-type="number">Consignor</th>
+                                <th data-type="number">Cost</th>
+                                <th data-type="number">Profit Margin</th>
+                                <th data-type="number">Percent Margin</th>
                             </tr>
-                        </repeat>
-                    </tbody>
-                </table>
+                            </thead>
+
+                            <tbody>
+                            <repeat group="{{@data}}" value="{{@row}}">
+                                <tr>
+                                    <td>{{@row['item_num']}}</td>
+                                    <td>{{@row['title']}}</td>
+                                    <td class="text-nowrap">{{@row['end_date']}}</td>
+                                    <td>{{@row['win']}}</td>
+                                    <td>{{@row['pristine']}}</td>
+                                    <td>{{@row['cosignor']}}</td>
+                                    <td>{{@row['cost']}}</td>
+                                    <td>{{@row['profit']}}</td>
+                                    <td>{{@row['percent_margin']}}</td>
+                                </tr>
+                            </repeat>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div><!--  end Data Table  -->
     </div><!-- end MAIN CONTAINER  ->
@@ -199,7 +215,13 @@
             // customize chart
             var options = {  //TODO change chart style
                 title: 'Percent Margin Summary',
-                is3D: true
+                is3D: true,
+                hAxis : {
+                    textStyle : {
+                        fontSize: 12
+                    }
+
+                }
             };
             // draw chart at id
             var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
