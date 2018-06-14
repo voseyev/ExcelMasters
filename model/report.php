@@ -72,12 +72,12 @@ foreach ($result as $row => $item) {
     $numRows++;
     $totalWin += $item['win'];
     $totalCons += $item['cosignor'];
-    if ($item['cost'] != null) {
+    if ($item['cost'] != 0) {
         $totalCost += $item['cost'];
         $numCost++;
     }
-    if ($item['profit'] != null) $totalMargin += $item['profit'];
-    if ($item['percent_margin'] != null) $totalPercent += $item['percent_margin'];
+    if ($item['profit'] != 0) $totalMargin += $item['profit'];
+    if ($item['percent_margin'] != 0) $totalPercent += $item['percent_margin'];
 }
 
 //checking which values are set to prevent dividing by 0
@@ -129,7 +129,7 @@ $alltitle = array();
 foreach ($allResult as $row => $item) {
     //returned columns:  item_num, title, end_date, win, pristine, cosignor, cost
     //date format (2008, 3, 4)
-    $profit = $item['profit'];
+    $profit = $item['percent_margin'];
     $tempTitle = $item['title'];
 
     if ($alltitle[$tempTitle] == null) {  //sets default for new date
@@ -147,11 +147,12 @@ foreach ($allResult as $row => $item) {
 
 
 //echo '<pre>';  print_r($timeline);  echo '</pre>';
+//echo '<pre>';  print_r($alltitle);  echo '</pre>';
 
 $title = str_replace("%","",$title);  //removed ampersands for displaying
 $f3->set('timeline', $timeline);
-$f3->set('allTitle', $alltitle);
-$f3->set('title', $title);
+$f3->set('alltitle', $alltitle);
+$f3->set('searchtitle', $title);
 $f3->set('startDate', $startDate);
 $f3->set('endDate', $endDate);
 $f3->set('totalItems', $numRows);

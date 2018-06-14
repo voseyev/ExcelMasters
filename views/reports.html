@@ -1,10 +1,10 @@
 <head>
     <title>Reports Page</title>
+    <!-- this include prints out the contents of css.html -->
     <include href="views/css.html"></include>
 </head>
 
 <body>
-    <!-- this include prints out the contents of css.html -->
     <nav class="navbar bg-light navbar-light">
         <!--<h2>Inventory Management</h2>-->
         <img id="logo" src="images/TimelessLogo.png" width="400" height="125" title="Company Logo"/>
@@ -22,7 +22,7 @@
                 <form action="#" method="post">
                     <label for="title">Title
                         <div><!--  this div puts label above the input  -->
-                            <input type="text" value="{{@title}}" name="title" id="title">
+                            <input type="text" value="{{@searchtitle}}" name="title" id="title">
                         </div>
                     </label>
                     <!--Datepicker-->
@@ -38,7 +38,6 @@
                     </label>
                     <button type="submit" name="datesearch" id="dateButton">Search</button>
                 </form>
-                <hr>
             </div>
         </div>
 
@@ -88,6 +87,23 @@
             </div>
         </div><!--  end Summary  -->
 
+        <!--  All Item Average Graph Percent Margin  -->
+        <div id="avgTitle"  class="row border">
+            <div class="col-12 text-center border">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <br>
+                        <h3>All Items Average Percent Margin</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div id="all_title_chart_div" style="min-height: 450px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!--  end Graph  -->
+
         <!--  Timeline  -->
         <div class="row border">
             <div class="col-12 text-center">
@@ -111,7 +127,7 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <br>
-                        <h3>Percent Margin</h3>
+                        <h3>Individual Item Percent Margin</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -122,22 +138,6 @@
             </div>
         </div><!--  end Graph  -->
 
-        <!--  All Item Average Graph Percent Margin  -->
-        <div id="avgTitle"  class="row border">
-            <div class="col-12 text-center border">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <br>
-                        <h3>All Items Average Percent Margin</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <div id="chart_div" style="min-height: 450px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div><!--  end Graph  -->
 
         <!--  Data table  -->
         <div class="row border bg-light">
@@ -245,29 +245,61 @@
             chart.draw(data, options);
         }
     </script>
+
     <!--  Timeline Chart -->
     <script type='text/javascript'>
         google.charts.load('current', {packages:['annotatedtimeline']});
         google.charts.setOnLoadCallback(drawChart2);
         function drawChart2() {
             var data = new google.visualization.arrayToDataTable([
-                    ['Date', 'Average Profit']
-                    <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
-                        <repeat group="{{@date}}" value="{{@cols}}">
-                            ,[new Date({{@key}}), {{@cols[0]}}]
-                        </repeat>
-                    </repeat>
-            ]);
+                ['Date', 'Average Profit']
+                <repeat group="{{@timeline}}" key="{{@key}}"value="{{@date}}">
+                    <repeat group="{{@date}}" value="{{@cols}}">
+                ,[new Date({{@key}}), {{@cols[0]}}]
+        </repeat>
+            </repeat>
+        ]);
 
             // customize chart
             var options = {  //TODO change chart style
                 displayAnnotations: true,
                 title: 'Timeline',
-                fill: 50,
+                fill: 25,
                 thickness: 3
             };
             //draw chart
             var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div_time'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
+    <!--  All Title Chart -->
+    <script type='text/javascript'>
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart3);
+        function drawChart3() {
+            var data = new google.visualization.arrayToDataTable([
+                ['Title', 'Average Percentage Margin']
+                <repeat group="{{@alltitle}}" key="{{@key}}"value="{{@row}}">
+                    <repeat group="{{@row}}" value="{{@cols}}">
+                        ,['{{@key}}',{{@cols[0]}}]
+                    </repeat>
+                </repeat>
+            ]);
+
+            // customize chart
+            var options = {  //TODO change chart style
+                title: 'All Items Percent Margin Summary',
+                hAxis : {
+                    textStyle : {
+                        fontSize: 12
+                    }
+
+                }
+            };
+            //draw chart
+            var chart = new google.visualization.ColumnChart(document.getElementById('all_title_chart_div'));
             chart.draw(data, options);
         }
     </script>

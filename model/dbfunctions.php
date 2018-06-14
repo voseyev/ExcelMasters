@@ -191,7 +191,7 @@ function selectCostNull()
 {
     global $dbh;
     $sql = "SELECT title, id, cosignor
-            FROM report_data WHERE cost is null GROUP BY title ORDER BY title";
+            FROM report_data WHERE cost = 0 GROUP BY title ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -271,7 +271,7 @@ function selectQuantity()
 {
     global $dbh;
     $sql = "SELECT title, id, quantity
-            FROM report_data WHERE quantity is null GROUP BY title ORDER BY title";
+            FROM report_data WHERE quantity = 0 GROUP BY title ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -282,7 +282,7 @@ function selectQuantity2()
 {
     global $dbh;
     $sql = "SELECT title, id, quantity
-            FROM report_data WHERE quantity is not null GROUP BY title ORDER BY title";
+            FROM report_data WHERE quantity != 0 GROUP BY title ORDER BY title";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
