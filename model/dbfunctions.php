@@ -169,6 +169,24 @@ function selectData($title, $start, $end)
     return $result;
 }
 
+/**
+ * @param $start date of data
+ * @param $end date of data
+ * @return array of data within the start and end date
+ */
+function selectAllData()
+{
+    global $dbh;
+
+    $sql = "SELECT item_num, title, end_date, win, pristine, cosignor, cost, profit, percent_margin 
+            FROM report_data 
+            ORDER BY end_date";
+    $statement = $dbh->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
 function selectCostNull()
 {
     global $dbh;

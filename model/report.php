@@ -53,6 +53,7 @@ if(isset($_POST['startDate']) && isset($_POST['endDate']) && isset($_POST['title
 }
 //get item data
 $result = selectData($title, $startDate, $endDate);
+$allResult = selectAllData();
 //get file data to display from database
 $reports = getReports();
 $f3->set('reports',$reports);
@@ -123,10 +124,33 @@ foreach ($result as $row => $item) {
     }
 }//end timeline builder
 
+//  AllItem Builder
+$alltitle = array();
+foreach ($allResult as $row => $item) {
+    //returned columns:  item_num, title, end_date, win, pristine, cosignor, cost
+    //date format (2008, 3, 4)
+    $profit = $item['profit'];
+    $tempTitle = $item['title'];
+
+    if ($alltitle[$tempTitle] == null) {  //sets default for new date
+        $alltitle[$tempTitle][] = array($profit, 1);
+    } else {  //recalculates average for existing dates
+        $avgOld2 = $alltitle[$tempTitle][0][0];
+        $count2 = $alltitle[$tempTitle][0][1];
+        $count2++;
+        $avgNew2 = ($avgOld2 + (($profit - $avgOld2) / $count2));
+        $alltitle[$tempTitle][0][0] = $avgNew2;
+        $alltitle[$tempTitle][0][1] = $count2;
+    }
+}//end timeline builder
+
+
+
 //echo '<pre>';  print_r($timeline);  echo '</pre>';
 
 $title = str_replace("%","",$title);  //removed ampersands for displaying
 $f3->set('timeline', $timeline);
+$f3->set('allTitle', $alltitle);
 $f3->set('title', $title);
 $f3->set('startDate', $startDate);
 $f3->set('endDate', $endDate);
